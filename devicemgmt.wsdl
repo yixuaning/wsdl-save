@@ -761,50 +761,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				</xs:complexType>
 			</xs:element>
 			<!--===============================-->
-			<xs:element name="GetRelayOutputs">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetRelayOutputsResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="RelayOutputs" type="tt:RelayOutput" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="SetRelayOutputSettings">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="RelayOutputToken" type="tt:ReferenceToken"/>
-						<xs:element name="Properties" type="tt:RelayOutputSettings"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="SetRelayOutputSettingsResponse">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="SetRelayOutputState">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="RelayOutputToken" type="tt:ReferenceToken" minOccurs="1" maxOccurs="1"/>
-						<xs:element name="LogicalState" type="tt:RelayLogicalState" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="SetRelayOutputStateResponse">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
 			<xs:element name="GetDot11Capabilities">
 				<xs:complexType>
 					<xs:sequence>
@@ -1204,24 +1160,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<wsdl:message name="SetAccessPolicyResponse">
 		<wsdl:part name="parameters" element="tds:SetAccessPolicyResponse"/>
 	</wsdl:message>
-	<wsdl:message name="GetRelayOutputsRequest">
-		<wsdl:part name="parameters" element="tds:GetRelayOutputs"/>
-	</wsdl:message>
-	<wsdl:message name="GetRelayOutputsResponse">
-		<wsdl:part name="parameters" element="tds:GetRelayOutputsResponse"/>
-	</wsdl:message>
-	<wsdl:message name="SetRelayOutputSettingsRequest">
-		<wsdl:part name="parameters" element="tds:SetRelayOutputSettings"/>
-	</wsdl:message>
-	<wsdl:message name="SetRelayOutputSettingsResponse">
-		<wsdl:part name="parameters" element="tds:SetRelayOutputSettingsResponse"/>
-	</wsdl:message>
-	<wsdl:message name="SetRelayOutputStateRequest">
-		<wsdl:part name="parameters" element="tds:SetRelayOutputState"/>
-	</wsdl:message>
-	<wsdl:message name="SetRelayOutputStateResponse">
-		<wsdl:part name="parameters" element="tds:SetRelayOutputStateResponse"/>
-	</wsdl:message>
 	<wsdl:message name="CreateDot1XConfigurationRequest">
 		<wsdl:part name="parameters" element="tds:CreateDot1XConfiguration"/>
 	</wsdl:message>
@@ -1516,24 +1454,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				based on WS-Security authentication, then the device shall support this command.</wsdl:documentation>
 			<wsdl:input message="tds:SetAccessPolicyRequest"/>
 			<wsdl:output message="tds:SetAccessPolicyResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetRelayOutputs">
-			<wsdl:documentation>This operation gets a list of all available relay outputs and their settings.<br/>
-				This method has been depricated with version 2.0. Refer to the DeviceIO service.</wsdl:documentation>
-			<wsdl:input message="tds:GetRelayOutputsRequest"/>
-			<wsdl:output message="tds:GetRelayOutputsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="SetRelayOutputSettings">
-			<wsdl:documentation>This operation sets the settings of a relay output.
-				<br/>This method has been depricated with version 2.0. Refer to the DeviceIO service.</wsdl:documentation>
-			<wsdl:input message="tds:SetRelayOutputSettingsRequest"/>
-			<wsdl:output message="tds:SetRelayOutputSettingsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="SetRelayOutputState">
-			<wsdl:documentation>This operation sets the state of a relay output.
-				<br/>This method has been depricated with version 2.0. Refer to the DeviceIO service.</wsdl:documentation>
-			<wsdl:input message="tds:SetRelayOutputStateRequest"/>
-			<wsdl:output message="tds:SetRelayOutputStateResponse"/>
 		</wsdl:operation>
 		<wsdl:operation name="CreateDot1XConfiguration">
 			<wsdl:documentation>This operation newly creates IEEE 802.1X configuration parameter set of the device. The
@@ -1888,33 +1808,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</wsdl:operation>
 		<wsdl:operation name="SetAccessPolicy">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetAccessPolicy"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetRelayOutputs">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetRelayOutputs"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="SetRelayOutputSettings">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetRelayOutputSettings"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="SetRelayOutputState">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetRelayOutputState"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>

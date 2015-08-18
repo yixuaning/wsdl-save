@@ -2038,11 +2038,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 					<xs:documentation>Number of input connectors.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="RelayOutputs" type="xs:int" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Number of relay outputs.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Extension" type="tt:IOCapabilitiesExtension" minOccurs="0"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -2229,7 +2224,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="VideoOutputs" type="xs:int"/>
 			<xs:element name="AudioSources" type="xs:int"/>
 			<xs:element name="AudioOutputs" type="xs:int"/>
-			<xs:element name="RelayOutputs" type="xs:int"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -2646,70 +2640,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<!--===============================-->
 	<!--   Start IO management Types   -->
 	<!--===============================-->
-	<xs:simpleType name="RelayLogicalState">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="active"/>
-			<xs:enumeration value="inactive"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="RelayIdleState">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="closed"/>
-			<xs:enumeration value="open"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="RelayOutputSettings">
-		<xs:sequence>
-			<xs:element name="Mode" type="tt:RelayMode">
-				<xs:annotation>
-					<xs:documentation>
-					'Bistable' or 'Monostable'
-					<ul>
-							<li>Bistable – After setting the state, the relay remains in this state.</li>
-							<li>Monostable – After setting the state, the relay returns to its idle state after the specified time.</li>
-						</ul>
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DelayTime" type="xs:duration">
-				<xs:annotation>
-					<xs:documentation>Time after which the relay returns to its idle state if it is in monostable mode. If the Mode field is set to bistable mode the value of the parameter can be ignored.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="IdleState" type="tt:RelayIdleState">
-				<xs:annotation>
-					<xs:documentation>
-			'open' or 'closed'
-			<ul>
-							<li>'open' means that the relay is open when the relay state is set to 'inactive' through the trigger command and closed when the state is set to 'active' through the same command.</li>
-							<li>'closed' means that the relay is closed when the relay state is set to 'inactive' through the trigger command and open when the state is set to 'active' through the same command.</li>
-						</ul>
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="RelayMode">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Monostable"/>
-			<xs:enumeration value="Bistable"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="RelayOutput">
-		<xs:complexContent>
-			<xs:extension base="tt:DeviceEntity">
-				<xs:sequence>
-					<xs:element name="Properties" type="tt:RelayOutputSettings"/>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
 	<!--===============================-->
 	<xs:complexType name="DigitalInput">
 		<xs:complexContent>
