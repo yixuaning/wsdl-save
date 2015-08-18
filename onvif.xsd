@@ -535,7 +535,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<!--===============================-->
 	<xs:simpleType name="VideoEncoding">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="JPEG"/>
 			<xs:enumeration value="H264"/>
 		</xs:restriction>
 	</xs:simpleType>
@@ -606,11 +605,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:documentation>Range of the quality values. A high value means higher quality.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="JPEG" type="tt:JpegOptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional JPEG encoder settings ranges (See also Extension element).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="H264" type="tt:H264Options" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional H.264 encoder settings ranges (See also Extension element).</xs:documentation>
@@ -624,11 +618,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<xs:complexType name="VideoEncoderOptionsExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="JPEG" type="tt:JpegOptions2" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional JPEG encoder settings ranges.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="H264" type="tt:H264Options2" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional H.264 encoder settings ranges.</xs:documentation>
@@ -642,42 +631,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		<xs:sequence>
 			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="JpegOptions">
-		<xs:sequence>
-			<xs:element name="ResolutionsAvailable" type="tt:VideoResolution" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported image sizes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FrameRateRange" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported frame rate in fps (frames per second).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="EncodingIntervalRange" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported encoding interval range. The encoding interval corresponds to the number of frames devided by the encoded frames. An encoding interval value of "1" means that all frames are encoded.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="JpegOptions2">
-		<xs:complexContent>
-			<xs:extension base="tt:JpegOptions">
-				<xs:sequence>
-					<xs:element name="BitrateRange" type="tt:IntRange">
-						<xs:annotation>
-							<xs:documentation>Supported range of encoded bitrate in kbps.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
 	</xs:complexType>
 	<!--===============================-->
 	<xs:complexType name="H264Options">
@@ -1084,11 +1037,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<!--===============================-->
 	<xs:complexType name="VideoDecoderConfigurationOptions">
 		<xs:sequence>
-			<xs:element name="JpegDecOptions" type="tt:JpegDecOptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>If the device is able to decode Jpeg streams this element describes the supported codecs and configurations</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="H264DecOptions" type="tt:H264DecOptions" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>If the device is able to decode H.264 streams this element describes the supported codecs and configurations</xs:documentation>
@@ -1119,28 +1067,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<xs:element name="SupportedFrameRate" type="tt:IntRange">
 				<xs:annotation>
 					<xs:documentation>Supported H.264 framerate range in fps</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="JpegDecOptions">
-		<xs:sequence>
-			<xs:element name="ResolutionsAvailable" type="tt:VideoResolution" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported Jpeg Video Resolutions</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupportedInputBitrate" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported Jpeg bitrate range in kbps</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupportedFrameRate" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported Jpeg framerate range in fps</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
