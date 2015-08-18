@@ -269,11 +269,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:documentation>Optional configuration of the pan tilt zoom unit.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MetadataConfiguration" type="tt:MetadataConfiguration" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional configuration of the metadata stream.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Extension" type="tt:ProfileExtension" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Extensions defined in ONVIF 2.0</xs:documentation>
@@ -322,7 +317,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<xs:element name="VideoEncoderConfiguration" type="tt:VideoEncoderConfiguration"/>
 	<xs:element name="AudioEncoderConfiguration" type="tt:AudioEncoderConfiguration"/>
 	<xs:element name="PTZConfiguration" type="tt:PTZConfiguration"/>
-	<xs:element name="MetadataConfiguration" type="tt:MetadataConfiguration"/>
 	<xs:element name="AudioOutputConfiguration" type="tt:AudioOutputConfiguration"/>
 	<xs:element name="AudioDecoderConfiguration" type="tt:AudioDecoderConfiguration"/>
 	<!--===============================-->
@@ -793,156 +787,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<!--===============================-->
 	<!--    MetadataConfiguration      -->
 	<!--===============================-->
-	<xs:complexType name="MetadataConfiguration">
-		<xs:complexContent>
-			<xs:extension base="tt:ConfigurationEntity">
-				<xs:sequence>
-					<xs:element name="PTZStatus" type="tt:PTZFilter" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>optional element to configure which PTZ related data is to include in the metadata stream</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="Events" type="tt:EventSubscription" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Optional element to configure the streaming of events. A client might be interested in receiving all, 
-								none or some of the events produced by the device:<ul>
-									<li>To get all events: Include the Events element but do not include a filter.</li>
-									<li>To get no events: Do not include the Events element.</li>
-									<li>To get only some events: Include the Events element and include a filter in the element.</li>
-								</ul>
-							</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="Multicast" type="tt:MulticastConfiguration">
-						<xs:annotation>
-							<xs:documentation>Defines the multicast settings that could be used for video streaming.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="SessionTimeout" type="xs:duration">
-						<xs:annotation>
-							<xs:documentation>The rtsp session timeout for the related audio stream</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="Extension" type="tt:MetadataConfigurationExtension" minOccurs="0"/>
-				</xs:sequence>
-				<xs:attribute name="CompressionType" type="xs:string">
-					<xs:annotation>
-						<xs:documentation>Optional parameter to configure compression type of Metadata payload. Use values from enumeration MetadataCompressionType.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PTZFilter">
-		<xs:sequence>
-			<xs:element name="Status" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>True if the metadata stream shall contain the PTZ status (IDLE, MOVING or UNKNOWN)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Position" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>True if the metadata stream shall contain the PTZ position</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EventSubscription">
-		<xs:annotation>
-			<xs:documentation>Subcription handling in the same way as base notification subscription.</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="Filter" type="wsnt:FilterType" minOccurs="0"/>
-			<xs:element name="SubscriptionPolicy" minOccurs="0">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataConfigurationOptions">
-		<xs:sequence>
-			<xs:element name="PTZStatusFilterOptions" type="tt:PTZStatusFilterOptions"/>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name ="Extension" type="tt:MetadataConfigurationOptionsExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataConfigurationOptionsExtension">
-		<xs:sequence>
-			<xs:element name="CompressionType" type="xs:string" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported metadata compression type. Its options shall be chosen from tt:MetadataCompressionType.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:MetadataConfigurationOptionsExtension2" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataConfigurationOptionsExtension2">
-		<xs:sequence>
-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="MetadataCompressionType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="None"/>
-			<xs:enumeration value="GZIP"/>
-			<xs:enumeration value="EXI"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="PTZStatusFilterOptions">
-		<xs:sequence>
-			<xs:element name="PanTiltStatusSupported" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>True if the device is able to stream pan or tilt status information.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ZoomStatusSupported" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>True if the device is able to stream zoom status inforamtion.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="PanTiltPositionSupported" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>True if the device is able to stream the pan or tilt position.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="ZoomPositionSupported" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>True if the device is able to stream zoom position information.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:PTZStatusFilterOptionsExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PTZStatusFilterOptionsExtension">
-		<xs:sequence>
-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<!--===============================-->
 	<!--          VideoOutput            -->
 	<!--===============================-->
@@ -2443,7 +2287,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:complexType name="SearchCapabilities">
 		<xs:sequence>
 			<xs:element name="XAddr" type="xs:anyURI"/>
-			<xs:element name="MetadataSearch" type="xs:boolean"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -5895,69 +5738,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
 	<!--===============================-->
 	<!--   Metadata Streaming Types    -->
 	<!--===============================-->
-	<xs:complexType name="MetadataStream">
-		<xs:sequence>
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
-				<xs:element name="PTZ" type="tt:PTZStream"/>
-				<xs:element name="Event" type="tt:EventStream"/>
-				<xs:element name="Extension" type="tt:MetadataStreamExtension"/>
-			</xs:choice>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataStreamExtension">
-		<xs:sequence>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:MetadataStreamExtension2" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataStreamExtension2">
-		<xs:sequence>
-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<!--===============================-->
-	<xs:complexType name="AudioDescriptor">
-		<xs:sequence>
-		<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="UtcTime" type="xs:dateTime" use="required">
-		</xs:attribute>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<!--===============================-->
-	<xs:element name="MetadataStream" type="tt:MetadataStream"/>
-	<!--===============================-->
-	<xs:complexType name="PTZStream">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element name="PTZStatus" type="tt:PTZStatus"/>
-			<xs:element name="Extension" type="tt:PTZStreamExtension"/>
-		</xs:choice>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PTZStreamExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EventStream">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element ref="wsnt:NotificationMessage"/>
-			<xs:element name="Extension" type="tt:EventStreamExtension"/>
-		</xs:choice>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EventStreamExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<!--===============================-->
 	<!-- End, Metadata Streaming Types -->
 	<!--===============================-->
@@ -6381,14 +6161,6 @@ and sample rate. </xs:documentation>
 		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
-	<xs:complexType name="MetadataFilter">
-		<xs:sequence>
-			<xs:element name="MetadataStreamFilter" type="tt:XPathExpression"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
 	<xs:simpleType name="XPathExpression">
 		<xs:restriction base="xs:string"/>
 	</xs:simpleType>
@@ -6490,43 +6262,6 @@ and sample rate. </xs:documentation>
 			<xs:element name="Position" type="tt:PTZVector">
 				<xs:annotation>
 					<xs:documentation>The PTZ position.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="FindMetadataResultList">
-		<xs:sequence>
-			<xs:element name="SearchState" type="tt:SearchState">
-				<xs:annotation>
-					<xs:documentation>The state of the search when the result is returned. Indicates if there can be more results, or if the search is completed.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Result" type="tt:FindMetadataResult" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>A FindMetadataResult structure for each found set of Metadata matching the search.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="FindMetadataResult">
-		<xs:sequence>
-			<xs:element name="RecordingToken" type="tt:RecordingReference">
-				<xs:annotation>
-					<xs:documentation>A reference to the recording containing the metadata.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="TrackToken" type="tt:TrackReference">
-				<xs:annotation>
-					<xs:documentation>A reference to the metadata track containing the matching metadata.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Time" type="xs:dateTime">
-				<xs:annotation>
-					<xs:documentation>The point in time when the matching metadata occurs in the metadata track.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
@@ -6676,7 +6411,6 @@ and sample rate. </xs:documentation>
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Video"/>
 			<xs:enumeration value="Audio"/>
-			<xs:enumeration value="Metadata"/>
 			<xs:enumeration value="Extended">
 				<xs:annotation>
 					<xs:documentation>Placeholder for future extension.</xs:documentation>
@@ -6730,11 +6464,6 @@ and sample rate. </xs:documentation>
 			<xs:element name="AudioAttributes" type="tt:AudioAttributes" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>If the track is an audio track, exactly one of this structure shall be present and contain the audio attributes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="MetadataAttributes" type="tt:MetadataAttributes" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>If the track is an metadata track, exactly one of this structure shall be present and contain the metadata attributes.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="tt:TrackAttributesExtension" minOccurs="0">
@@ -6803,28 +6532,6 @@ and sample rate. </xs:documentation>
 			</xs:element>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataAttributes">
-		<xs:sequence>
-			<xs:element name="CanContainPTZ" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates that there can be PTZ data in the metadata track in the specified time interval.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="CanContainNotifications" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates that there can be notifications in the metadata track in the specified time interval.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="PtzSpaces" type="tt:StringAttrList">
-			<xs:annotation>
-				<xs:documentation>List of all PTZ spaces active for recording. Note that events are only recorded on position changes and the actual point of recording may not necessarily contain an event of the specified type. </xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
 		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
