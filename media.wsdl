@@ -405,48 +405,6 @@ AudioSourceConfiguration shall be removed.</xs:documentation>
 				</xs:complexType>
 			</xs:element>
 			<!--===============================-->
-			<xs:element name="AddPTZConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="ProfileToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>Reference to the profile where the configuration should be added</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:element name="ConfigurationToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>Contains a reference to the PTZConfiguration to add</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="AddPTZConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-          </xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="RemovePTZConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="ProfileToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>Contains a reference to the media profile from which the
-PTZConfiguration shall be removed.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="RemovePTZConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-          </xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
 			<xs:element name="AddAudioOutputConfiguration">
 				<xs:complexType>
 					<xs:sequence>
@@ -1582,18 +1540,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
 	<wsdl:message name="RemoveAudioSourceConfigurationResponse">
 		<wsdl:part name="parameters" element="trt:RemoveAudioSourceConfigurationResponse"/>
 	</wsdl:message>
-	<wsdl:message name="AddPTZConfigurationRequest">
-		<wsdl:part name="parameters" element="trt:AddPTZConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="AddPTZConfigurationResponse">
-		<wsdl:part name="parameters" element="trt:AddPTZConfigurationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="RemovePTZConfigurationRequest">
-		<wsdl:part name="parameters" element="trt:RemovePTZConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="RemovePTZConfigurationResponse">
-		<wsdl:part name="parameters" element="trt:RemovePTZConfigurationResponse"/>
-	</wsdl:message>
 	<wsdl:message name="AddAudioOutputConfigurationRequest">
 		<wsdl:part name="parameters" element="trt:AddAudioOutputConfiguration"/>
 	</wsdl:message>
@@ -1954,20 +1900,6 @@ removal shall be persistent. Audio source configurations should only be removed 
 AudioEncoderConfiguration from the media profile.</wsdl:documentation>
 			<wsdl:input message="trt:RemoveAudioSourceConfigurationRequest"/>
 			<wsdl:output message="trt:RemoveAudioSourceConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="AddPTZConfiguration">
-			<wsdl:documentation>This operation adds a PTZConfiguration to an existing media profile. If a configuration exists
-in the media profile, it will be replaced. The change shall be persistent. Adding a PTZConfiguration to a media profile means that streams using that media profile can
-contain PTZ status (in the metadata), and that the media profile can be used for controlling
-PTZ movement.</wsdl:documentation>
-			<wsdl:input message="trt:AddPTZConfigurationRequest"/>
-			<wsdl:output message="trt:AddPTZConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="RemovePTZConfiguration">
-			<wsdl:documentation>This operation removes a PTZConfiguration from an existing media profile. If the media profile
-does not contain a PTZConfiguration, the operation has no effect. The removal shall be persistent.</wsdl:documentation>
-			<wsdl:input message="trt:RemovePTZConfigurationRequest"/>
-			<wsdl:output message="trt:RemovePTZConfigurationResponse"/>
 		</wsdl:operation>
 		<wsdl:operation name="AddAudioOutputConfiguration">
 			<wsdl:documentation>This operation adds an AudioOutputConfiguration to an existing media profile. If a configuration exists in the media profile, it will be replaced. The change shall be persistent.</wsdl:documentation>
@@ -2376,16 +2308,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
 			</wsdl:output>
 		</wsdl:operation>
 		<!--===============================-->
-		<wsdl:operation name="AddPTZConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/AddPTZConfiguration"/>
-			<wsdl:input>
-				<soap:body parts="parameters" use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body parts="parameters" use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<!--===============================-->
 		<wsdl:operation name="AddAudioOutputConfiguration">
 			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/AddAudioOutputConfiguration"/>
 			<wsdl:input>
@@ -2438,16 +2360,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
 		<!--===============================-->
 		<wsdl:operation name="RemoveAudioSourceConfiguration">
 			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/RemoveAudioSourceConfiguration"/>
-			<wsdl:input>
-				<soap:body parts="parameters" use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body parts="parameters" use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<!--===============================-->
-		<wsdl:operation name="RemovePTZConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/RemovePTZConfiguration"/>
 			<wsdl:input>
 				<soap:body parts="parameters" use="literal"/>
 			</wsdl:input>
