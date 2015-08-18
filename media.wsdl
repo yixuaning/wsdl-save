@@ -60,11 +60,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						<xs:documentation>Indicates the support for changing video source mode.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="OSD" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates if OSD is supported.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
 				<xs:attribute name="EXICompression" type="xs:boolean">
 					<xs:annotation>
 						<xs:documentation>Indicates the support for the Efficient XML Interchange (EXI) binary XML format.</xs:documentation>
@@ -1651,143 +1646,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
 
 			<!--===============================-->
 			<!--============OSD Schema Begin================-->
-			<xs:element name="GetOSDs">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="ConfigurationToken" type="tt:ReferenceToken" minOccurs="0" maxOccurs="1">
-							<xs:annotation>
-								<xs:documentation>Token of the Video Source Configuration, which has OSDs associated with are requested. If token not exist, request all available OSDs.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetOSDsResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSDs" type="tt:OSDConfiguration" minOccurs="0" maxOccurs="unbounded">
-							<xs:annotation>
-								<xs:documentation>This element contains a list of requested OSDs.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetOSD">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSDToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>The GetOSD command fetches the OSD configuration if the OSD token is known.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetOSDResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSD" type="tt:OSDConfiguration">
-							<xs:annotation>
-								<xs:documentation>The requested OSD configuration.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="SetOSD">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSD" type="tt:OSDConfiguration">
-							<xs:annotation>
-								<xs:documentation>Contains the modified OSD configuration.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="SetOSDResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetOSDOptions">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="ConfigurationToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>Video Source Configuration Token that specifies an existing video source configuration that the options shall be compatible with.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetOSDOptionsResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSDOptions" type="tt:OSDConfigurationOptions">
-							<xs:annotation>
-								<xs:documentation/>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="CreateOSD">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSD" type="tt:OSDConfiguration">
-							<xs:annotation>
-								<xs:documentation>Contain the initial OSD configuration for create.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="CreateOSDResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSDToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>Returns Token of the newly created OSD</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="DeleteOSD">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OSDToken" type="tt:ReferenceToken">
-							<xs:annotation>
-								<xs:documentation>This element contains a reference to the OSD configuration that should be deleted.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="DeleteOSDResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
 			<!--============OSD Schema End================-->
 		</xs:schema>
 	</wsdl:types>
@@ -2192,42 +2050,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
 	</wsdl:message>
 	<wsdl:message name="SetVideoSourceModeResponse">
 		<wsdl:part name="parameters" element="trt:SetVideoSourceModeResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDsRequest">
-		<wsdl:part name="parameters" element="trt:GetOSDs"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDsResponse">
-		<wsdl:part name="parameters" element="trt:GetOSDsResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDRequest">
-		<wsdl:part name="parameters" element="trt:GetOSD"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDResponse">
-		<wsdl:part name="parameters" element="trt:GetOSDResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDOptionsRequest">
-		<wsdl:part name="parameters" element="trt:GetOSDOptions"/>
-	</wsdl:message>
-	<wsdl:message name="GetOSDOptionsResponse">
-		<wsdl:part name="parameters" element="trt:GetOSDOptionsResponse"/>
-	</wsdl:message>
-	<wsdl:message name="SetOSDRequest">
-		<wsdl:part name="parameters" element="trt:SetOSD"/>
-	</wsdl:message>
-	<wsdl:message name="SetOSDResponse">
-		<wsdl:part name="parameters" element="trt:SetOSDResponse"/>
-	</wsdl:message>
-	<wsdl:message name="CreateOSDRequest">
-		<wsdl:part name="parameters" element="trt:CreateOSD"/>
-	</wsdl:message>
-	<wsdl:message name="CreateOSDResponse">
-		<wsdl:part name="parameters" element="trt:CreateOSDResponse"/>
-	</wsdl:message>
-	<wsdl:message name="DeleteOSDRequest">
-		<wsdl:part name="parameters" element="trt:DeleteOSD"/>
-	</wsdl:message>
-	<wsdl:message name="DeleteOSDResponse">
-		<wsdl:part name="parameters" element="trt:DeleteOSDResponse"/>
 	</wsdl:message>
 	<wsdl:portType name="Media">
 		<!--===============================-->
@@ -2676,36 +2498,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
 			<wsdl:output message="trt:SetVideoSourceModeResponse"/>
 		</wsdl:operation>
 		<!--==============OSD Operation Begin=================-->
-		<wsdl:operation name="GetOSDs">
-			<wsdl:documentation>Get the OSDs.</wsdl:documentation>
-			<wsdl:input message="trt:GetOSDsRequest"/>
-			<wsdl:output message="trt:GetOSDsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetOSD">
-			<wsdl:documentation>Get the OSD.</wsdl:documentation>
-			<wsdl:input message="trt:GetOSDRequest"/>
-			<wsdl:output message="trt:GetOSDResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetOSDOptions">
-			<wsdl:documentation>Get the OSD Options.</wsdl:documentation>
-			<wsdl:input message="trt:GetOSDOptionsRequest"/>
-			<wsdl:output message="trt:GetOSDOptionsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="SetOSD">
-			<wsdl:documentation>Set the OSD</wsdl:documentation>
-			<wsdl:input message="trt:SetOSDRequest"/>
-			<wsdl:output message="trt:SetOSDResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="CreateOSD">
-			<wsdl:documentation>Create the OSD.</wsdl:documentation>
-			<wsdl:input message="trt:CreateOSDRequest"/>
-			<wsdl:output message="trt:CreateOSDResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="DeleteOSD">
-			<wsdl:documentation>Delete the OSD.</wsdl:documentation>
-			<wsdl:input message="trt:DeleteOSDRequest"/>
-			<wsdl:output message="trt:DeleteOSDResponse"/>
-		</wsdl:operation>
 		<!--==============OSD Operation End=================-->
 	</wsdl:portType>
 	<wsdl:binding name="MediaBinding" type="trt:Media">
@@ -3358,60 +3150,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
 		</wsdl:operation>
 		<!--===============================-->
 		<!--==============OSD Operation Begin=================-->
-		<wsdl:operation name="GetOSDs">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/GetOSDs"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetOSD">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/GetOSD"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetOSDOptions">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/GetOSDOptions"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="SetOSD">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/SetOSD"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="CreateOSD">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/CreateOSD"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="DeleteOSD">
-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/DeleteOSD"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
 		<!--==============OSD Operation End=================-->
 	</wsdl:binding>
 </wsdl:definitions>
