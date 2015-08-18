@@ -264,11 +264,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:documentation>Optional configuration of the Audio encoder.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="VideoAnalyticsConfiguration" type="tt:VideoAnalyticsConfiguration" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional configuration of the video analytics module and rule engine.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="PTZConfiguration" type="tt:PTZConfiguration" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional configuration of the pan tilt zoom unit.</xs:documentation>
@@ -326,7 +321,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<xs:element name="AudioSourceConfiguration" type="tt:AudioSourceConfiguration"/>
 	<xs:element name="VideoEncoderConfiguration" type="tt:VideoEncoderConfiguration"/>
 	<xs:element name="AudioEncoderConfiguration" type="tt:AudioEncoderConfiguration"/>
-	<xs:element name="VideoAnalyticsConfiguration" type="tt:VideoAnalyticsConfiguration"/>
 	<xs:element name="PTZConfiguration" type="tt:PTZConfiguration"/>
 	<xs:element name="MetadataConfiguration" type="tt:MetadataConfiguration"/>
 	<xs:element name="AudioOutputConfiguration" type="tt:AudioOutputConfiguration"/>
@@ -796,18 +790,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<!--===============================-->
 	<!--  VideoAnalyticsConfiguration  -->
 	<!--===============================-->
-	<xs:complexType name="VideoAnalyticsConfiguration">
-		<xs:complexContent>
-			<xs:extension base="tt:ConfigurationEntity">
-				<xs:sequence>
-					<xs:element name="AnalyticsEngineConfiguration" type="tt:AnalyticsEngineConfiguration"/>
-					<xs:element name="RuleEngineConfiguration" type="tt:RuleEngineConfiguration"/>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
 	<!--===============================-->
 	<!--    MetadataConfiguration      -->
 	<!--===============================-->
@@ -7673,7 +7655,6 @@ and sample rate. </xs:documentation>
 	<!--===============================-->
 	<xs:complexType name="EngineConfiguration">
 		<xs:sequence>
-			<xs:element name="VideoAnalyticsConfiguration" type="tt:VideoAnalyticsConfiguration"/>
 			<xs:element name="AnalyticsEngineInputInfo" type="tt:AnalyticsEngineInputInfo"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
