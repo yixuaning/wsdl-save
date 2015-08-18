@@ -1,0 +1,1782 @@
+diff --git a/media.wsdl b/media.wsdl
+old mode 100644
+new mode 100755
+index 203323c..9223d1e
+--- a/media.wsdl
++++ b/media.wsdl
+@@ -410,48 +410,6 @@ AudioSourceConfiguration shall be removed.</xs:documentation>
+ 				</xs:complexType>
+ 			</xs:element>
+ 			<!--===============================-->
+-			<xs:element name="AddPTZConfiguration">
+-				<xs:complexType>
+-					<xs:sequence>
+-						<xs:element name="ProfileToken" type="tt:ReferenceToken">
+-							<xs:annotation>
+-								<xs:documentation>Reference to the profile where the configuration should be added</xs:documentation>
+-							</xs:annotation>
+-						</xs:element>
+-						<xs:element name="ConfigurationToken" type="tt:ReferenceToken">
+-							<xs:annotation>
+-								<xs:documentation>Contains a reference to the PTZConfiguration to add</xs:documentation>
+-							</xs:annotation>
+-						</xs:element>
+-					</xs:sequence>
+-				</xs:complexType>
+-			</xs:element>
+-			<xs:element name="AddPTZConfigurationResponse">
+-				<xs:complexType>
+-					<xs:sequence>
+-          </xs:sequence>
+-				</xs:complexType>
+-			</xs:element>
+-			<!--===============================-->
+-			<xs:element name="RemovePTZConfiguration">
+-				<xs:complexType>
+-					<xs:sequence>
+-						<xs:element name="ProfileToken" type="tt:ReferenceToken">
+-							<xs:annotation>
+-								<xs:documentation>Contains a reference to the media profile from which the
+-PTZConfiguration shall be removed.</xs:documentation>
+-							</xs:annotation>
+-						</xs:element>
+-					</xs:sequence>
+-				</xs:complexType>
+-			</xs:element>
+-			<xs:element name="RemovePTZConfigurationResponse">
+-				<xs:complexType>
+-					<xs:sequence>
+-          </xs:sequence>
+-				</xs:complexType>
+-			</xs:element>
+-			<!--===============================-->
+ 			<xs:element name="AddVideoAnalyticsConfiguration">
+ 				<xs:complexType>
+ 					<xs:sequence>
+@@ -2020,18 +1978,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
+ 	<wsdl:message name="RemoveAudioSourceConfigurationResponse">
+ 		<wsdl:part name="parameters" element="trt:RemoveAudioSourceConfigurationResponse"/>
+ 	</wsdl:message>
+-	<wsdl:message name="AddPTZConfigurationRequest">
+-		<wsdl:part name="parameters" element="trt:AddPTZConfiguration"/>
+-	</wsdl:message>
+-	<wsdl:message name="AddPTZConfigurationResponse">
+-		<wsdl:part name="parameters" element="trt:AddPTZConfigurationResponse"/>
+-	</wsdl:message>
+-	<wsdl:message name="RemovePTZConfigurationRequest">
+-		<wsdl:part name="parameters" element="trt:RemovePTZConfiguration"/>
+-	</wsdl:message>
+-	<wsdl:message name="RemovePTZConfigurationResponse">
+-		<wsdl:part name="parameters" element="trt:RemovePTZConfigurationResponse"/>
+-	</wsdl:message>
+ 	<wsdl:message name="AddVideoAnalyticsConfigurationRequest">
+ 		<wsdl:part name="parameters" element="trt:AddVideoAnalyticsConfiguration"/>
+ 	</wsdl:message>
+@@ -2507,20 +2453,6 @@ AudioEncoderConfiguration from the media profile.</wsdl:documentation>
+ 			<wsdl:input message="trt:RemoveAudioSourceConfigurationRequest"/>
+ 			<wsdl:output message="trt:RemoveAudioSourceConfigurationResponse"/>
+ 		</wsdl:operation>
+-		<wsdl:operation name="AddPTZConfiguration">
+-			<wsdl:documentation>This operation adds a PTZConfiguration to an existing media profile. If a configuration exists
+-in the media profile, it will be replaced. The change shall be persistent. Adding a PTZConfiguration to a media profile means that streams using that media profile can
+-contain PTZ status (in the metadata), and that the media profile can be used for controlling
+-PTZ movement.</wsdl:documentation>
+-			<wsdl:input message="trt:AddPTZConfigurationRequest"/>
+-			<wsdl:output message="trt:AddPTZConfigurationResponse"/>
+-		</wsdl:operation>
+-		<wsdl:operation name="RemovePTZConfiguration">
+-			<wsdl:documentation>This operation removes a PTZConfiguration from an existing media profile. If the media profile
+-does not contain a PTZConfiguration, the operation has no effect. The removal shall be persistent.</wsdl:documentation>
+-			<wsdl:input message="trt:RemovePTZConfigurationRequest"/>
+-			<wsdl:output message="trt:RemovePTZConfigurationResponse"/>
+-		</wsdl:operation>
+ 		<wsdl:operation name="AddVideoAnalyticsConfiguration">
+ 			<wsdl:documentation>This operation adds a VideoAnalytics configuration to an existing media profile. If a
+ configuration exists in the media profile, it will be replaced. The change shall be persistent. Adding a VideoAnalyticsConfiguration to a media profile means that streams using that media
+@@ -3037,16 +2969,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
+ 			</wsdl:output>
+ 		</wsdl:operation>
+ 		<!--===============================-->
+-		<wsdl:operation name="AddPTZConfiguration">
+-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/AddPTZConfiguration"/>
+-			<wsdl:input>
+-				<soap:body parts="parameters" use="literal"/>
+-			</wsdl:input>
+-			<wsdl:output>
+-				<soap:body parts="parameters" use="literal"/>
+-			</wsdl:output>
+-		</wsdl:operation>
+-		<!--===============================-->
+ 		<wsdl:operation name="AddVideoAnalyticsConfiguration">
+ 			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/AddVideoAnalyticsConfiguration"/>
+ 			<wsdl:input>
+@@ -3127,16 +3049,6 @@ image will be updated automatically and independent from calls to GetSnapshotUri
+ 			</wsdl:output>
+ 		</wsdl:operation>
+ 		<!--===============================-->
+-		<wsdl:operation name="RemovePTZConfiguration">
+-			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/RemovePTZConfiguration"/>
+-			<wsdl:input>
+-				<soap:body parts="parameters" use="literal"/>
+-			</wsdl:input>
+-			<wsdl:output>
+-				<soap:body parts="parameters" use="literal"/>
+-			</wsdl:output>
+-		</wsdl:operation>
+-		<!--===============================-->
+ 		<wsdl:operation name="RemoveVideoAnalyticsConfiguration">
+ 			<soap:operation soapAction="http://www.onvif.org/ver10/media/wsdl/RemoveVideoAnalyticsConfiguration"/>
+ 			<wsdl:input>
+diff --git a/onvif.xsd b/onvif.xsd
+index ebfd724..0601bc3 100755
+--- a/onvif.xsd
++++ b/onvif.xsd
+@@ -269,11 +269,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 					<xs:documentation>Optional configuration of the video analytics module and rule engine.</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="PTZConfiguration" type="tt:PTZConfiguration" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional configuration of the pan tilt zoom unit.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:element name="MetadataConfiguration" type="tt:MetadataConfiguration" minOccurs="0">
+ 				<xs:annotation>
+ 					<xs:documentation>Optional configuration of the metadata stream.</xs:documentation>
+@@ -327,7 +322,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 	<xs:element name="VideoEncoderConfiguration" type="tt:VideoEncoderConfiguration"/>
+ 	<xs:element name="AudioEncoderConfiguration" type="tt:AudioEncoderConfiguration"/>
+ 	<xs:element name="VideoAnalyticsConfiguration" type="tt:VideoAnalyticsConfiguration"/>
+-	<xs:element name="PTZConfiguration" type="tt:PTZConfiguration"/>
+ 	<xs:element name="MetadataConfiguration" type="tt:MetadataConfiguration"/>
+ 	<xs:element name="AudioOutputConfiguration" type="tt:AudioOutputConfiguration"/>
+ 	<xs:element name="AudioDecoderConfiguration" type="tt:AudioDecoderConfiguration"/>
+@@ -946,11 +940,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 		<xs:complexContent>
+ 			<xs:extension base="tt:ConfigurationEntity">
+ 				<xs:sequence>
+-					<xs:element name="PTZStatus" type="tt:PTZFilter" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>optional element to configure which PTZ related data is to include in the metadata stream</xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+ 					<xs:element name="Events" type="tt:EventSubscription" minOccurs="0">
+ 						<xs:annotation>
+ 							<xs:documentation>Optional element to configure the streaming of events. A client might be interested in receiving all, 
+@@ -997,22 +986,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZFilter">
+-		<xs:sequence>
+-			<xs:element name="Status" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>True if the metadata stream shall contain the PTZ status (IDLE, MOVING or UNKNOWN)</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Position" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>True if the metadata stream shall contain the PTZ position</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<xs:complexType name="EventSubscription">
+ 		<xs:annotation>
+ 			<xs:documentation>Subcription handling in the same way as base notification subscription.</xs:documentation>
+@@ -1033,7 +1006,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 	<!--===============================-->
+ 	<xs:complexType name="MetadataConfigurationOptions">
+ 		<xs:sequence>
+-			<xs:element name="PTZStatusFilterOptions" type="tt:PTZStatusFilterOptions"/>
+ 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 			<xs:element name ="Extension" type="tt:MetadataConfigurationOptionsExtension" minOccurs="0"/>
+ 		</xs:sequence>
+@@ -1065,40 +1037,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
+ 		</xs:restriction>
+ 	</xs:simpleType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZStatusFilterOptions">
+-		<xs:sequence>
+-			<xs:element name="PanTiltStatusSupported" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>True if the device is able to stream pan or tilt status information.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ZoomStatusSupported" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>True if the device is able to stream zoom status inforamtion.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-			<xs:element name="PanTiltPositionSupported" type="xs:boolean" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>True if the device is able to stream the pan or tilt position.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ZoomPositionSupported" type="xs:boolean" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>True if the device is able to stream zoom position information.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZStatusFilterOptionsExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZStatusFilterOptionsExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<!--          VideoOutput            -->
+ 	<!--===============================-->
+ 	<xs:complexType name="VideoOutput">
+@@ -2299,7 +2237,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
+ 			<xs:enumeration value="Events"/>
+ 			<xs:enumeration value="Imaging"/>
+ 			<xs:enumeration value="Media"/>
+-			<xs:enumeration value="PTZ"/>
+ 		</xs:restriction>
+ 	</xs:simpleType>
+ 	<!--===============================-->
+@@ -2330,11 +2267,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
+ 					<xs:documentation>Media capabilities</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="PTZ" type="tt:PTZCapabilities" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>PTZ capabilities</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:element name="Extension" type="tt:CapabilitiesExtension" minOccurs="0"/>
+ 		</xs:sequence>
+ 		<xs:anyAttribute processContents="lax"/>
+@@ -2638,18 +2570,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZCapabilities">
+-		<xs:sequence>
+-			<xs:element name="XAddr" type="xs:anyURI">
+-				<xs:annotation>
+-					<xs:documentation>PTZ service URI.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<xs:complexType name="DeviceIOCapabilities">
+ 		<xs:sequence>
+ 			<xs:element name="XAddr" type="xs:anyURI"/>
+@@ -3099,1195 +3019,227 @@ decoding .A decoder shall decode every data it receives (according to its capabi
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="CertificateStatus">
+-		<xs:sequence>
+-			<xs:element name="CertificateID" type="xs:token">
+-				<xs:annotation>
+-					<xs:documentation>Certificate id.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Status" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>Indicates whether or not a certificate is used in a HTTPS configuration.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="CertificateWithPrivateKey">
+-		<xs:sequence>
+-			<xs:element name="CertificateID" type="xs:token" minOccurs="0"/>
+-			<xs:element name="Certificate" type="tt:BinaryData"/>
+-			<xs:element name="PrivateKey" type="tt:BinaryData"/>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="CertificateInformation">
+-		<xs:sequence>
+-			<xs:element name="CertificateID" type="xs:token"/>
+-			<xs:element name="IssuerDN" type="xs:string" minOccurs="0"/>
+-			<xs:element name="SubjectDN" type="xs:string" minOccurs="0"/>
+-			<xs:element name="KeyUsage" type="tt:CertificateUsage" minOccurs="0"/>
+-			<xs:element name="ExtendedKeyUsage" type="tt:CertificateUsage" minOccurs="0"/>
+-			<xs:element name="KeyLength" type="xs:int" minOccurs="0"/>
+-			<xs:element name="Version" type="xs:string" minOccurs="0"/>
+-			<xs:element name="SerialNum" type="xs:string" minOccurs="0"/>
+-			<xs:element name="SignatureAlgorithm" type="xs:string" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Validity Range is from "NotBefore" to "NotAfter"; the corresponding DateTimeRange is from "From" to "Until"</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Validity" type="tt:DateTimeRange" minOccurs="0"/>
+-			<xs:element name="Extension" type="tt:CertificateInformationExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="CertificateUsage">
+-		<xs:simpleContent>
+-			<xs:extension base="xs:string">
+-				<xs:attribute name="Critical" type="xs:boolean" use="required"/>
+-			</xs:extension>
+-		</xs:simpleContent>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="CertificateInformationExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<!--End, Security management Types -->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--   Start Dot1X related Types   -->
+-	<!--===============================-->
+-	<xs:complexType name="Dot1XConfiguration">
+-		<xs:sequence>
+-			<xs:element name="Dot1XConfigurationToken" type="tt:ReferenceToken"/>
+-			<xs:element name="Identity" type="xs:string"/>
+-			<xs:element name="AnonymousID" type="xs:string" minOccurs="0"/>
+-			<xs:element name="EAPMethod" type="xs:int">
+-				<xs:annotation>
+-					<xs:documentation>
+-				EAP Method type as defined in <a href="http://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml">IANA EAP Registry</a>.
+-			</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="CACertificateID" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
+-			<xs:element name="EAPMethodConfiguration" type="tt:EAPMethodConfiguration" minOccurs="0"/>
+-			<xs:element name="Extension" type="tt:Dot1XConfigurationExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Dot1XConfigurationExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="EAPMethodConfiguration">
+-		<xs:sequence>
+-			<xs:element name="TLSConfiguration" type="tt:TLSConfiguration" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Confgiuration information for TLS Method.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Password" type="xs:string" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Password for those EAP Methods that require a password. The password shall never be returned on a get method.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:EapMethodExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="EapMethodExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="TLSConfiguration">
+-		<xs:sequence>
+-			<xs:element name="CertificateID" type="xs:token"/>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="GenericEapPwdConfigurationExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<!--End, Dot1X related Types -->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--   Start IO management Types   -->
+-	<!--===============================-->
+-	<xs:simpleType name="RelayLogicalState">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="active"/>
+-			<xs:enumeration value="inactive"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:simpleType name="RelayIdleState">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="closed"/>
+-			<xs:enumeration value="open"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:complexType name="RelayOutputSettings">
+-		<xs:sequence>
+-			<xs:element name="Mode" type="tt:RelayMode">
+-				<xs:annotation>
+-					<xs:documentation>
+-					'Bistable' or 'Monostable'
+-					<ul>
+-							<li>Bistable – After setting the state, the relay remains in this state.</li>
+-							<li>Monostable – After setting the state, the relay returns to its idle state after the specified time.</li>
+-						</ul>
+-					</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="DelayTime" type="xs:duration">
+-				<xs:annotation>
+-					<xs:documentation>Time after which the relay returns to its idle state if it is in monostable mode. If the Mode field is set to bistable mode the value of the parameter can be ignored.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="IdleState" type="tt:RelayIdleState">
+-				<xs:annotation>
+-					<xs:documentation>
+-			'open' or 'closed'
+-			<ul>
+-							<li>'open' means that the relay is open when the relay state is set to 'inactive' through the trigger command and closed when the state is set to 'active' through the same command.</li>
+-							<li>'closed' means that the relay is closed when the relay state is set to 'inactive' through the trigger command and open when the state is set to 'active' through the same command.</li>
+-						</ul>
+-					</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:simpleType name="RelayMode">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="Monostable"/>
+-			<xs:enumeration value="Bistable"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:complexType name="RelayOutput">
+-		<xs:complexContent>
+-			<xs:extension base="tt:DeviceEntity">
+-				<xs:sequence>
+-					<xs:element name="Properties" type="tt:RelayOutputSettings"/>
+-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-				</xs:sequence>
+-				<xs:anyAttribute processContents="lax"/>
+-			</xs:extension>
+-		</xs:complexContent>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="DigitalInput">
+-		<xs:complexContent>
+-			<xs:extension base="tt:DeviceEntity">
+-				<xs:sequence>
+-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-				</xs:sequence>
+-				<xs:anyAttribute processContents="lax"/>
+-			</xs:extension>
+-		</xs:complexContent>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<!--   End, IO management Types    -->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--===============================-->
+-	<!--    Start PTZ Related Types    -->
+-	<!--===============================-->
+-	<xs:complexType name="PTZNode">
+-		<xs:complexContent>
+-			<xs:extension base="tt:DeviceEntity">
+-				<xs:sequence>
+-					<xs:element name="Name" type="tt:Name" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                A unique identifier that is used to reference PTZ Nodes.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="SupportedPTZSpaces" type="tt:PTZSpaces">
+-						<xs:annotation>
+-							<xs:documentation>
+-                A list of Coordinate Systems available for the PTZ Node. For each Coordinate System, the PTZ Node MUST specify its allowed range.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="MaximumNumberOfPresets" type="xs:int">
+-						<xs:annotation>
+-							<xs:documentation>
+-                All preset operations MUST be available for this PTZ Node if one preset is supported.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="HomeSupported" type="xs:boolean">
+-						<xs:annotation>
+-							<xs:documentation>
+-                A boolean operator specifying the availability of a home position. If set to true, the Home Position Operations MUST be available for this PTZ Node.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="Extension" type="tt:PTZNodeExtension" minOccurs="0"/>
+-				</xs:sequence>
+-				<xs:attribute name="FixedHomePosition" type="xs:boolean">
+-					<xs:annotation>
+-						<xs:documentation>
+-      				Indication whether the HomePosition of a Node is fixed or it can be changed via the SetHomePosition command.
+-      			</xs:documentation>
+-					</xs:annotation>
+-				</xs:attribute>
+-				<xs:anyAttribute processContents="lax"/>
+-			</xs:extension>
+-		</xs:complexContent>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZNodeExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-			<xs:element name="SupportedPresetTour" type="tt:PTZPresetTourSupported" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            Detail of supported Preset Tour feature.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZNodeExtension2" minOccurs="0"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZNodeExtension2">
+-		<xs:sequence>
+-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourSupported">
+-		<xs:sequence>
+-			<xs:element name="MaximumNumberOfPresetTours" type="xs:int">
+-				<xs:annotation>
+-					<xs:documentation>Indicates number of preset tours that can be created. Required preset tour operations shall be available for this PTZ Node if one or more preset tour is supported.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="PTZPresetTourOperation" type="tt:PTZPresetTourOperation" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>Indicates which preset tour operations are available for this PTZ Node.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourSupportedExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourSupportedExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZConfiguration">
+-		<xs:complexContent>
+-			<xs:extension base="tt:ConfigurationEntity">
+-				<xs:sequence>
+-					<xs:element name="NodeToken" type="tt:ReferenceToken">
+-						<xs:annotation>
+-							<xs:documentation>
+-                A mandatory reference to the PTZ Node that the PTZ Configuration belongs to.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultAbsolutePantTiltPositionSpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports absolute Pan/Tilt movements, it shall specify one Absolute Pan/Tilt Position Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultAbsoluteZoomPositionSpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports absolute zoom movements, it shall specify one Absolute Zoom Position Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultRelativePanTiltTranslationSpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports relative Pan/Tilt movements, it shall specify one RelativePan/Tilt Translation Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultRelativeZoomTranslationSpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports relative zoom movements, it shall specify one Relative Zoom Translation Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultContinuousPanTiltVelocitySpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports continuous Pan/Tilt movements, it shall specify one Continuous Pan/Tilt Velocity Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultContinuousZoomVelocitySpace" type="xs:anyURI" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports continuous zoom movements, it shall specify one Continuous Zoom Velocity Space as default.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultPTZSpeed" type="tt:PTZSpeed" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports absolute or relative PTZ movements, it shall specify corresponding default Pan/Tilt and Zoom speeds.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="DefaultPTZTimeout" type="xs:duration" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                If the PTZ Node supports continuous movements, it shall specify a default timeout, after which the movement stops.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="PanTiltLimits" type="tt:PanTiltLimits" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                The Pan/Tilt limits element should be present for a PTZ Node that supports an absolute Pan/Tilt. If the element is present it signals the support for configurable Pan/Tilt limits. If limits are enabled, the Pan/Tilt movements shall always stay within the specified range. The Pan/Tilt limits are disabled by setting the limits to –INF or +INF.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="ZoomLimits" type="tt:ZoomLimits" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-                The Zoom limits element should be present for a PTZ Node that supports absolute zoom. If the element is present it signals the supports for configurable Zoom limits. If limits are enabled the zoom movements shall always stay within the specified range. The Zoom limits are disabled by settings the limits to -INF and +INF.
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-					<xs:element name="Extension" type="tt:PTZConfigurationExtension" minOccurs="0">
+-						<xs:annotation>
+-							<xs:documentation>
+-              </xs:documentation>
+-						</xs:annotation>
+-					</xs:element>
+-				</xs:sequence>
+-				<xs:attribute name="MoveRamp" type="xs:int">
+-					<xs:annotation>
+-						<xs:documentation>The optional acceleration ramp used by the device when moving.</xs:documentation>
+-					</xs:annotation>
+-				</xs:attribute>
+-				<xs:attribute name="PresetRamp" type="xs:int">
+-					<xs:annotation>
+-						<xs:documentation>The optional acceleration ramp used by the device when recalling presets.</xs:documentation>
+-					</xs:annotation>
+-				</xs:attribute>
+-				<xs:attribute name="PresetTourRamp" type="xs:int">
+-					<xs:annotation>
+-						<xs:documentation>The optional acceleration ramp used by the device when executing PresetTours.</xs:documentation>
+-					</xs:annotation>
+-				</xs:attribute>
+-				<xs:anyAttribute processContents="lax"/>
+-			</xs:extension>
+-		</xs:complexContent>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZConfigurationExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-			<xs:element name="PTControlDirection" type="tt:PTControlDirection" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional element to configure PT Control Direction related features.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZConfigurationExtension2" minOccurs="0"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZConfigurationExtension2">
+-		<xs:sequence>
+-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTControlDirection">
+-		<xs:sequence>
+-			<xs:element name="EFlip" type="tt:EFlip" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional element to configure related parameters for E-Flip.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Reverse" type="tt:Reverse" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional element to configure related parameters for reversing of PT Control Direction.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTControlDirectionExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTControlDirectionExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="EFlip">
+-		<xs:sequence>
+-			<xs:element name="Mode" type="tt:EFlipMode">
+-				<xs:annotation>
+-					<xs:documentation>Parameter to enable/disable E-Flip feature.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Reverse">
+-		<xs:sequence>
+-			<xs:element name="Mode" type="tt:ReverseMode">
+-				<xs:annotation>
+-					<xs:documentation>Parameter to enable/disable Reverse feature.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:simpleType name="EFlipMode">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="OFF"/>
+-			<xs:enumeration value="ON"/>
+-			<xs:enumeration value="Extended"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:simpleType name="ReverseMode">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="OFF"/>
+-			<xs:enumeration value="ON"/>
+-			<xs:enumeration value="AUTO"/>
+-			<xs:enumeration value="Extended"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZConfigurationOptions">
+-		<xs:sequence>
+-			<xs:element name="Spaces" type="tt:PTZSpaces">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A list of supported coordinate systems including their range limitations.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="PTZTimeout" type="tt:DurationRange">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A timeout Range within which Timeouts are accepted by the PTZ Node.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-			<xs:element name="PTControlDirection" type="tt:PTControlDirectionOptions" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Supported options for PT Direction Control.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZConfigurationOptions2" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:attribute name="PTZRamps" type="tt:IntAttrList">
+-			<xs:annotation>
+-				<xs:documentation>
+-					The list of acceleration ramps supported by the device. The
+-					smallest acceleration value corresponds to the minimal index, the
+-					highest acceleration corresponds to the maximum index.					
+-				</xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZConfigurationOptions2">
+-		<xs:sequence>
+-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTControlDirectionOptions">
+-		<xs:sequence>
+-			<xs:element name="EFlip" type="tt:EFlipOptions" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Supported options for EFlip feature.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Reverse" type="tt:ReverseOptions" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Supported options for Reverse feature.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTControlDirectionOptionsExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTControlDirectionOptionsExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="EFlipOptions">
+-		<xs:sequence>
+-			<xs:element name="Mode" type="tt:EFlipMode" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>Options of EFlip mode parameter.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:EFlipOptionsExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="EFlipOptionsExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="ReverseOptions">
+-		<xs:sequence>
+-			<xs:element name="Mode" type="tt:ReverseMode" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>Options of Reverse mode parameter.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:ReverseOptionsExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="ReverseOptionsExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PanTiltLimits">
+-		<xs:sequence>
+-			<xs:element name="Range" type="tt:Space2DDescription">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A range of pan tilt limits.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="ZoomLimits">
+-		<xs:sequence>
+-			<xs:element name="Range" type="tt:Space1DDescription">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A range of zoom limit
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZSpaces">
+-		<xs:sequence>
+-			<xs:element name="AbsolutePanTiltPositionSpace" type="tt:Space2DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The Generic Pan/Tilt Position space is provided by every PTZ node that supports absolute Pan/Tilt, since it does not relate to a specific physical range. 
+-			Instead, the range should be defined as the full range of the PTZ unit normalized to the range -1 to 1 resulting in the following space description.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="AbsoluteZoomPositionSpace" type="tt:Space1DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The Generic Zoom Position Space is provided by every PTZ node that supports absolute Zoom, since it does not relate to a specific physical range. 
+-			Instead, the range should be defined as the full range of the Zoom normalized to the range 0 (wide) to 1 (tele). 
+-			There is no assumption about how the generic zoom range is mapped to magnification, FOV or other physical zoom dimension.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="RelativePanTiltTranslationSpace" type="tt:Space2DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The Generic Pan/Tilt translation space is provided by every PTZ node that supports relative Pan/Tilt, since it does not relate to a specific physical range. 
+-			Instead, the range should be defined as the full positive and negative translation range of the PTZ unit normalized to the range -1 to 1, 
+-			where positive translation would mean clockwise rotation or movement in right/up direction resulting in the following space description.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="RelativeZoomTranslationSpace" type="tt:Space1DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The Generic Zoom Translation Space is provided by every PTZ node that supports relative Zoom, since it does not relate to a specific physical range. 
+-			Instead, the corresponding absolute range should be defined as the full positive and negative translation range of the Zoom normalized to the range -1 to1, 
+-			where a positive translation maps to a movement in TELE direction. The translation is signed to indicate direction (negative is to wide, positive is to tele). 
+-			There is no assumption about how the generic zoom range is mapped to magnification, FOV or other physical zoom dimension. This results in the following space description.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ContinuousPanTiltVelocitySpace" type="tt:Space2DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The generic Pan/Tilt velocity space shall be provided by every PTZ node, since it does not relate to a specific physical range. 
+-			Instead, the range should be defined as a range of the PTZ unit’s speed normalized to the range -1 to 1, where a positive velocity would map to clockwise 
+-			rotation or movement in the right/up direction. A signed speed can be independently specified for the pan and tilt component resulting in the following space description.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ContinuousZoomVelocitySpace" type="tt:Space1DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The generic zoom velocity space specifies a zoom factor velocity without knowing the underlying physical model. The range should be normalized from -1 to 1, 
+-			where a positive velocity would map to TELE direction. A generic zoom velocity space description resembles the following.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="PanTiltSpeedSpace" type="tt:Space1DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The speed space specifies the speed for a Pan/Tilt movement when moving to an absolute position or to a relative translation. 
+-			In contrast to the velocity spaces, speed spaces do not contain any directional information. The speed of a combined Pan/Tilt 
+-			movement is represented by a single non-negative scalar value.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ZoomSpeedSpace" type="tt:Space1DDescription" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>
+-            The speed space specifies the speed for a Zoom movement when moving to an absolute position or to a relative translation. 
+-			In contrast to the velocity spaces, speed spaces do not contain any directional information. 
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZSpacesExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZSpacesExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Space2DDescription">
+-		<xs:sequence>
+-			<xs:element name="URI" type="xs:anyURI">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A URI of coordinate systems.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="XRange" type="tt:FloatRange">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A range of x-axis.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="YRange" type="tt:FloatRange">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A range of y-axis.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Space1DDescription">
+-		<xs:sequence>
+-			<xs:element name="URI" type="xs:anyURI">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A URI of coordinate systems.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="XRange" type="tt:FloatRange">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A range of x-axis.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Vector2D">
+-		<xs:attribute name="x" type="xs:float" use="required"/>
+-		<xs:attribute name="y" type="xs:float" use="required"/>
+-		<xs:attribute name="space" type="xs:anyURI" use="optional">
+-			<xs:annotation>
+-				<xs:documentation>
+-  				Pan/tilt coordinate space selector. The following options are defined:<ul>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/GenericSpeedSpace</li>
+-					</ul>
+-				</xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="Vector1D">
+-		<xs:attribute name="x" type="xs:float" use="required"/>
+-		<xs:attribute name="space" type="xs:anyURI" use="optional">
+-			<xs:annotation>
+-				<xs:documentation>
+-  				Pan/tilt coordinate space selector. The following options are defined:<ul style="">
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/PositionGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/TranslationGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</li>
+-						<li> http://www.onvif.org/ver10/tptz/PanTiltSpaces/GenericSpeedSpace</li>
+-					</ul>
+-				</xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZVector">
+-		<xs:sequence>
+-			<xs:element name="PanTilt" type="tt:Vector2D" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Pan and tilt position. The x component corresponds to pan and the y component to tilt.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Zoom" type="tt:Vector1D" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A zoom position.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZSpeed">
+-		<xs:sequence>
+-			<xs:element name="PanTilt" type="tt:Vector2D" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Pan and tilt speed. The x component corresponds to pan and the y component to tilt. If omitted in a request, the current (if any) PanTilt movement should not be affected. </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Zoom" type="tt:Vector1D" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A zoom speed. If omitted in a request, the current (if any) Zoom movement should not be affected.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZStatus">
+-		<xs:sequence>
+-			<xs:element name="Position" type="tt:PTZVector" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            Specifies the absolute position of the PTZ unit together with the Space references. The default absolute spaces of the corresponding PTZ configuration MUST be referenced within the Position element.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="MoveStatus" type="tt:PTZMoveStatus" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            Indicates if the Pan/Tilt/Zoom device unit is currently moving, idle or in an unknown state.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Error" type="xs:string" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            States a current PTZ error.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="UtcTime" type="xs:dateTime">
+-				<xs:annotation>
+-					<xs:documentation>
+-            Specifies the UTC time when this status was generated.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPreset">
+-		<xs:sequence>
+-			<xs:element name="Name" type="tt:Name" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A list of preset position name.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="PTZPosition" type="tt:PTZVector" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-            A list of preset position.
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-		<xs:attribute name="token" type="tt:ReferenceToken">
+-			<xs:annotation>
+-				<xs:documentation>
+-        </xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZMoveStatus">
+-		<xs:sequence>
+-			<xs:element name="PanTilt" type="tt:MoveStatus" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Zoom" type="tt:MoveStatus" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>
+-          </xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:simpleType name="MoveStatus">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="IDLE"/>
+-			<xs:enumeration value="MOVING"/>
+-			<xs:enumeration value="UNKNOWN"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:simpleType name="PTZPresetTourState">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="Idle"/>
+-			<xs:enumeration value="Touring"/>
+-			<xs:enumeration value="Paused"/>
+-			<xs:enumeration value="Extended"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:simpleType name="PTZPresetTourDirection">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="Forward"/>
+-			<xs:enumeration value="Backward"/>
+-			<xs:enumeration value="Extended"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:simpleType name="PTZPresetTourOperation">
+-		<xs:restriction base="xs:string">
+-			<xs:enumeration value="Start"/>
+-			<xs:enumeration value="Stop"/>
+-			<xs:enumeration value="Pause"/>
+-			<xs:enumeration value="Extended"/>
+-		</xs:restriction>
+-	</xs:simpleType>
+-	<!--===============================-->
+-	<xs:complexType name="PresetTour">
+-		<xs:sequence>
+-			<xs:element name="Name" type="tt:Name" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Readable name of the preset tour.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Status" type="tt:PTZPresetTourStatus">
+-				<xs:annotation>
+-					<xs:documentation>Read only parameters to indicate the status of the preset tour.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="AutoStart" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>Auto Start flag of the preset tour. True allows the preset tour to be activated always.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="StartingCondition" type="tt:PTZPresetTourStartingCondition">
+-				<xs:annotation>
+-					<xs:documentation>Parameters to specify the detail behavior of the preset tour.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="TourSpot" type="tt:PTZPresetTourSpot" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>A list of detail of touring spots including preset positions.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:attribute name="token" type="tt:ReferenceToken">
+-			<xs:annotation>
+-				<xs:documentation>Unique identifier of this preset tour.</xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourSpot">
+-		<xs:sequence>
+-			<xs:element name="PresetDetail" type="tt:PTZPresetTourPresetDetail">
+-				<xs:annotation>
+-					<xs:documentation>Detail definition of preset position of the tour spot.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Speed" type="tt:PTZSpeed" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional parameter to specify Pan/Tilt and Zoom speed on moving toward this tour spot.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="StayTime" type="xs:duration" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional parameter to specify time duration of staying on this tour sport.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourSpotExtension" minOccurs="0"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourSpotExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourPresetDetail">
+-		<xs:sequence>
+-			<xs:choice>
+-				<xs:element name="PresetToken" type="tt:ReferenceToken">
+-					<xs:annotation>
+-						<xs:documentation>Option to specify the preset position with Preset Token defined in advance.</xs:documentation>
+-					</xs:annotation>
+-				</xs:element>
+-				<xs:element name="Home" type="xs:boolean">
+-					<xs:annotation>
+-						<xs:documentation>Option to specify the preset position with the home position of this PTZ Node. "False" to this parameter shall be treated as an invalid argument.</xs:documentation>
+-					</xs:annotation>
+-				</xs:element>
+-				<xs:element name="PTZPosition" type="tt:PTZVector">
+-					<xs:annotation>
+-						<xs:documentation>Option to specify the preset position with vector of PTZ node directly.</xs:documentation>
+-					</xs:annotation>
+-				</xs:element>
+-				<xs:element name="TypeExtension" type="tt:PTZPresetTourTypeExtension"/>
+-			</xs:choice>
++	<xs:complexType name="CertificateStatus">
++		<xs:sequence>
++			<xs:element name="CertificateID" type="xs:token">
++				<xs:annotation>
++					<xs:documentation>Certificate id.</xs:documentation>
++				</xs:annotation>
++			</xs:element>
++			<xs:element name="Status" type="xs:boolean">
++				<xs:annotation>
++					<xs:documentation>Indicates whether or not a certificate is used in a HTTPS configuration.</xs:documentation>
++				</xs:annotation>
++			</xs:element>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourTypeExtension">
++	<xs:complexType name="CertificateWithPrivateKey">
+ 		<xs:sequence>
++			<xs:element name="CertificateID" type="xs:token" minOccurs="0"/>
++			<xs:element name="Certificate" type="tt:BinaryData"/>
++			<xs:element name="PrivateKey" type="tt:BinaryData"/>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
++		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStatus">
++	<xs:complexType name="CertificateInformation">
+ 		<xs:sequence>
+-			<xs:element name="State" type="tt:PTZPresetTourState">
+-				<xs:annotation>
+-					<xs:documentation>Indicates state of this preset tour by Idle/Touring/Paused.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="CurrentTourSpot" type="tt:PTZPresetTourSpot" minOccurs="0">
++			<xs:element name="CertificateID" type="xs:token"/>
++			<xs:element name="IssuerDN" type="xs:string" minOccurs="0"/>
++			<xs:element name="SubjectDN" type="xs:string" minOccurs="0"/>
++			<xs:element name="KeyUsage" type="tt:CertificateUsage" minOccurs="0"/>
++			<xs:element name="ExtendedKeyUsage" type="tt:CertificateUsage" minOccurs="0"/>
++			<xs:element name="KeyLength" type="xs:int" minOccurs="0"/>
++			<xs:element name="Version" type="xs:string" minOccurs="0"/>
++			<xs:element name="SerialNum" type="xs:string" minOccurs="0"/>
++			<xs:element name="SignatureAlgorithm" type="xs:string" minOccurs="0">
+ 				<xs:annotation>
+-					<xs:documentation>Indicates a tour spot currently staying.</xs:documentation>
++					<xs:documentation>Validity Range is from "NotBefore" to "NotAfter"; the corresponding DateTimeRange is from "From" to "Until"</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourStatusExtension" minOccurs="0"/>
++			<xs:element name="Validity" type="tt:DateTimeRange" minOccurs="0"/>
++			<xs:element name="Extension" type="tt:CertificateInformationExtension" minOccurs="0"/>
+ 		</xs:sequence>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStatusExtension">
++	<xs:complexType name="CertificateUsage">
++		<xs:simpleContent>
++			<xs:extension base="xs:string">
++				<xs:attribute name="Critical" type="xs:boolean" use="required"/>
++			</xs:extension>
++		</xs:simpleContent>
++	</xs:complexType>
++	<!--===============================-->
++	<xs:complexType name="CertificateInformationExtension">
+ 		<xs:sequence>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStartingCondition">
++	<!--End, Security management Types -->
++	<!--===============================-->
++	<!--===============================-->
++	<!--===============================-->
++	<!--   Start Dot1X related Types   -->
++	<!--===============================-->
++	<xs:complexType name="Dot1XConfiguration">
+ 		<xs:sequence>
+-			<xs:element name="RecurringTime" type="xs:int" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional parameter to specify how many times the preset tour is recurred.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="RecurringDuration" type="xs:duration" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Optional parameter to specify how long time duration the preset tour is recurred.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Direction" type="tt:PTZPresetTourDirection" minOccurs="0">
++			<xs:element name="Dot1XConfigurationToken" type="tt:ReferenceToken"/>
++			<xs:element name="Identity" type="xs:string"/>
++			<xs:element name="AnonymousID" type="xs:string" minOccurs="0"/>
++			<xs:element name="EAPMethod" type="xs:int">
+ 				<xs:annotation>
+-					<xs:documentation>Optional parameter to choose which direction the preset tour goes. Forward shall be chosen in case it is omitted.</xs:documentation>
++					<xs:documentation>
++				EAP Method type as defined in <a href="http://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml">IANA EAP Registry</a>.
++			</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourStartingConditionExtension" minOccurs="0"/>
++			<xs:element name="CACertificateID" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
++			<xs:element name="EAPMethodConfiguration" type="tt:EAPMethodConfiguration" minOccurs="0"/>
++			<xs:element name="Extension" type="tt:Dot1XConfigurationExtension" minOccurs="0"/>
+ 		</xs:sequence>
+-		<xs:attribute name="RandomPresetOrder" type="xs:boolean">
+-			<xs:annotation>
+-				<xs:documentation>Execute presets in random order. If set to true and Direction is also present, Direction will be ignored and presets of the Tour will be recalled randomly.</xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStartingConditionExtension">
++	<xs:complexType name="Dot1XConfigurationExtension">
+ 		<xs:sequence>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourOptions">
++	<xs:complexType name="EAPMethodConfiguration">
+ 		<xs:sequence>
+-			<xs:element name="AutoStart" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>Indicates whether or not the AutoStart is supported.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="StartingCondition" type="tt:PTZPresetTourStartingConditionOptions">
++			<xs:element name="TLSConfiguration" type="tt:TLSConfiguration" minOccurs="0">
+ 				<xs:annotation>
+-					<xs:documentation>Supported options for Preset Tour Starting Condition.</xs:documentation>
++					<xs:documentation>Confgiuration information for TLS Method.</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="TourSpot" type="tt:PTZPresetTourSpotOptions">
++			<xs:element name="Password" type="xs:string" minOccurs="0">
+ 				<xs:annotation>
+-					<xs:documentation>Supported options for Preset Tour Spot.</xs:documentation>
++					<xs:documentation>Password for those EAP Methods that require a password. The password shall never be returned on a get method.</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
++			<xs:element name="Extension" type="tt:EapMethodExtension" minOccurs="0"/>
+ 		</xs:sequence>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourSpotOptions">
++	<xs:complexType name="EapMethodExtension">
+ 		<xs:sequence>
+-			<xs:element name="PresetDetail" type="tt:PTZPresetTourPresetDetailOptions">
+-				<xs:annotation>
+-					<xs:documentation>Supported options for detail definition of preset position of the tour spot.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="StayTime" type="tt:DurationRange">
+-				<xs:annotation>
+-					<xs:documentation>Supported range of stay time for a tour spot.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourPresetDetailOptions">
++	<xs:complexType name="TLSConfiguration">
+ 		<xs:sequence>
+-			<xs:element name="PresetToken" type="tt:ReferenceToken" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>A list of available Preset Tokens for tour spots.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Home" type="xs:boolean" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>An option to indicate Home postion for tour spots.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="PanTiltPositionSpace" type="tt:Space2DDescription" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Supported range of Pan and Tilt for tour spots.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="ZoomPositionSpace" type="tt:Space1DDescription" minOccurs="0">
+-				<xs:annotation>
+-					<xs:documentation>Supported range of Zoom for a tour spot.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourPresetDetailOptionsExtension" minOccurs="0"/>
++			<xs:element name="CertificateID" type="xs:token"/>
++			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourPresetDetailOptionsExtension">
++	<xs:complexType name="GenericEapPwdConfigurationExtension">
+ 		<xs:sequence>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStartingConditionOptions">
++	<!--End, Dot1X related Types -->
++	<!--===============================-->
++	<!--===============================-->
++	<!--===============================-->
++	<!--   Start IO management Types   -->
++	<!--===============================-->
++	<xs:simpleType name="RelayLogicalState">
++		<xs:restriction base="xs:string">
++			<xs:enumeration value="active"/>
++			<xs:enumeration value="inactive"/>
++		</xs:restriction>
++	</xs:simpleType>
++	<!--===============================-->
++	<xs:simpleType name="RelayIdleState">
++		<xs:restriction base="xs:string">
++			<xs:enumeration value="closed"/>
++			<xs:enumeration value="open"/>
++		</xs:restriction>
++	</xs:simpleType>
++	<!--===============================-->
++	<xs:complexType name="RelayOutputSettings">
+ 		<xs:sequence>
+-			<xs:element name="RecurringTime" type="tt:IntRange" minOccurs="0">
++			<xs:element name="Mode" type="tt:RelayMode">
+ 				<xs:annotation>
+-					<xs:documentation>Supported range of Recurring Time.</xs:documentation>
++					<xs:documentation>
++					'Bistable' or 'Monostable'
++					<ul>
++							<li>Bistable – After setting the state, the relay remains in this state.</li>
++							<li>Monostable – After setting the state, the relay returns to its idle state after the specified time.</li>
++						</ul>
++					</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="RecurringDuration" type="tt:DurationRange" minOccurs="0">
++			<xs:element name="DelayTime" type="xs:duration">
+ 				<xs:annotation>
+-					<xs:documentation>Supported range of Recurring Duration.</xs:documentation>
++					<xs:documentation>Time after which the relay returns to its idle state if it is in monostable mode. If the Mode field is set to bistable mode the value of the parameter can be ignored.</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="Direction" type="tt:PTZPresetTourDirection" minOccurs="0" maxOccurs="unbounded">
++			<xs:element name="IdleState" type="tt:RelayIdleState">
+ 				<xs:annotation>
+-					<xs:documentation>Supported options for Direction of Preset Tour.</xs:documentation>
++					<xs:documentation>
++			'open' or 'closed'
++			<ul>
++							<li>'open' means that the relay is open when the relay state is set to 'inactive' through the trigger command and closed when the state is set to 'active' through the same command.</li>
++							<li>'closed' means that the relay is closed when the relay state is set to 'inactive' through the trigger command and open when the state is set to 'active' through the same command.</li>
++						</ul>
++					</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="Extension" type="tt:PTZPresetTourStartingConditionOptionsExtension" minOccurs="0"/>
+ 		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPresetTourStartingConditionOptionsExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
++	<xs:simpleType name="RelayMode">
++		<xs:restriction base="xs:string">
++			<xs:enumeration value="Monostable"/>
++			<xs:enumeration value="Bistable"/>
++		</xs:restriction>
++	</xs:simpleType>
++	<!--===============================-->
++	<xs:complexType name="RelayOutput">
++		<xs:complexContent>
++			<xs:extension base="tt:DeviceEntity">
++				<xs:sequence>
++					<xs:element name="Properties" type="tt:RelayOutputSettings"/>
++					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
++				</xs:sequence>
++				<xs:anyAttribute processContents="lax"/>
++			</xs:extension>
++		</xs:complexContent>
++	</xs:complexType>
++	<!--===============================-->
++	<xs:complexType name="DigitalInput">
++		<xs:complexContent>
++			<xs:extension base="tt:DeviceEntity">
++				<xs:sequence>
++					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
++				</xs:sequence>
++				<xs:anyAttribute processContents="lax"/>
++			</xs:extension>
++		</xs:complexContent>
+ 	</xs:complexType>
+ 	<!--===============================-->
++	<!--   End, IO management Types    -->
++	<!--===============================-->
++	<!--===============================-->
++	<!--===============================-->
++	<!--===============================-->
++	<!--    Start PTZ Related Types    -->
++	<!--===============================-->
++	
++	<!--===============================-->
+ 	<!--     End, PTZ Related Types    -->
+ 	<!--===============================-->
+ 	<!--===============================-->
+@@ -4311,13 +3263,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
+ 				</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="MoveStatus" type="tt:MoveStatus">
+-				<xs:annotation>
+-					<xs:documentation>
+-				Status of focus MoveStatus.
+-				</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:element name="Error" type="xs:string">
+ 				<xs:annotation>
+ 					<xs:documentation>
+@@ -4862,13 +3807,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
+ 				</xs:documentation>
+ 				</xs:annotation>
+ 			</xs:element>
+-			<xs:element name="MoveStatus" type="tt:MoveStatus">
+-				<xs:annotation>
+-					<xs:documentation>
+-				Status of focus MoveStatus.
+-				</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:element name="Error" type="xs:string" minOccurs="0">
+ 				<xs:annotation>
+ 					<xs:documentation>
+@@ -6180,7 +5118,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
+ 	<!--===============================-->
+ 	<xs:complexType name="Frame">
+ 		<xs:sequence>
+-			<xs:element name="PTZStatus" type="tt:PTZStatus" minOccurs="0"/>
+ 			<xs:element name="Transformation" type="tt:Transformation" minOccurs="0"/>
+ 			<xs:element name="Object" type="tt:Object" minOccurs="0" maxOccurs="unbounded"/>
+ 			<xs:element name="ObjectTree" type="tt:ObjectTree" minOccurs="0"/>
+@@ -6545,7 +5482,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
+ 		<xs:sequence>
+ 			<xs:choice minOccurs="0" maxOccurs="unbounded">
+ 				<xs:element name="VideoAnalytics" type="tt:VideoAnalyticsStream"/>
+-				<xs:element name="PTZ" type="tt:PTZStream"/>
+ 				<xs:element name="Event" type="tt:EventStream"/>
+ 				<xs:element name="Extension" type="tt:MetadataStreamExtension"/>
+ 			</xs:choice>
+@@ -6607,19 +5543,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
+ 		</xs:sequence>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZStream">
+-		<xs:choice minOccurs="0" maxOccurs="unbounded">
+-			<xs:element name="PTZStatus" type="tt:PTZStatus"/>
+-			<xs:element name="Extension" type="tt:PTZStreamExtension"/>
+-		</xs:choice>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="PTZStreamExtension">
+-		<xs:sequence>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<xs:complexType name="EventStream">
+ 		<xs:choice minOccurs="0" maxOccurs="unbounded">
+ 			<xs:element ref="wsnt:NotificationMessage"/>
+@@ -7033,28 +5956,6 @@ and sample rate. </xs:documentation>
+ 		</xs:complexContent>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="PTZPositionFilter">
+-		<xs:sequence>
+-			<xs:element name="MinPosition" type="tt:PTZVector">
+-				<xs:annotation>
+-					<xs:documentation>The lower boundary of the PTZ volume to look for.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="MaxPosition" type="tt:PTZVector">
+-				<xs:annotation>
+-					<xs:documentation>The upper boundary of the PTZ volume to look for.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="EnterOrExit" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>If true, search for when entering the specified PTZ volume.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<xs:complexType name="MetadataFilter">
+ 		<xs:sequence>
+ 			<xs:element name="MetadataStreamFilter" type="tt:XPathExpression"/>
+@@ -7129,48 +6030,6 @@ and sample rate. </xs:documentation>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
+-	<xs:complexType name="FindPTZPositionResultList">
+-		<xs:sequence>
+-			<xs:element name="SearchState" type="tt:SearchState">
+-				<xs:annotation>
+-					<xs:documentation>The state of the search when the result is returned. Indicates if there can be more results, or if the search is completed.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Result" type="tt:FindPTZPositionResult" minOccurs="0" maxOccurs="unbounded">
+-				<xs:annotation>
+-					<xs:documentation>A FindPTZPositionResult structure for each found PTZ position matching the search.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-		</xs:sequence>
+-	</xs:complexType>
+-	<!--===============================-->
+-	<xs:complexType name="FindPTZPositionResult">
+-		<xs:sequence>
+-			<xs:element name="RecordingToken" type="tt:RecordingReference">
+-				<xs:annotation>
+-					<xs:documentation>A reference to the recording containing the PTZ position.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="TrackToken" type="tt:TrackReference">
+-				<xs:annotation>
+-					<xs:documentation>A reference to the metadata track containing the PTZ position.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Time" type="xs:dateTime">
+-				<xs:annotation>
+-					<xs:documentation>The time when the PTZ position was valid.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:element name="Position" type="tt:PTZVector">
+-				<xs:annotation>
+-					<xs:documentation>The PTZ position.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+-		</xs:sequence>
+-		<xs:anyAttribute processContents="lax"/>
+-	</xs:complexType>
+-	<!--===============================-->
+ 	<xs:complexType name="FindMetadataResultList">
+ 		<xs:sequence>
+ 			<xs:element name="SearchState" type="tt:SearchState">
+@@ -7482,11 +6341,6 @@ and sample rate. </xs:documentation>
+ 	<!--===============================-->
+ 	<xs:complexType name="MetadataAttributes">
+ 		<xs:sequence>
+-			<xs:element name="CanContainPTZ" type="xs:boolean">
+-				<xs:annotation>
+-					<xs:documentation>Indicates that there can be PTZ data in the metadata track in the specified time interval.</xs:documentation>
+-				</xs:annotation>
+-			</xs:element>
+ 			<xs:element name="CanContainAnalytics" type="xs:boolean">
+ 				<xs:annotation>
+ 					<xs:documentation>Indicates that there can be analytics data in the metadata track in the specified time interval.</xs:documentation>
+@@ -7499,11 +6353,6 @@ and sample rate. </xs:documentation>
+ 			</xs:element>
+ 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+ 		</xs:sequence>
+-		<xs:attribute name="PtzSpaces" type="tt:StringAttrList">
+-			<xs:annotation>
+-				<xs:documentation>List of all PTZ spaces active for recording. Note that events are only recorded on position changes and the actual point of recording may not necessarily contain an event of the specified type. </xs:documentation>
+-			</xs:annotation>
+-		</xs:attribute>
+ 		<xs:anyAttribute processContents="lax"/>
+ 	</xs:complexType>
+ 	<!--===============================-->
