@@ -2462,8 +2462,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:complexType name="IOCapabilitiesExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Auxiliary" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="AuxiliaryCommands" type="tt:AuxiliaryData" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Extension" type="tt:IOCapabilitiesExtension2"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -3352,13 +3350,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
               </xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="AuxiliaryCommands" type="tt:AuxiliaryData" minOccurs="0" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:documentation>
-                A list of supported Auxiliary commands. If the list is not empty, the Auxiliary Operations MUST be available for this PTZ Node.
-              </xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="Extension" type="tt:PTZNodeExtension" minOccurs="0"/>
 				</xs:sequence>
 				<xs:attribute name="FixedHomePosition" type="xs:boolean">
@@ -4004,12 +3995,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			</xs:element>
 		</xs:sequence>
 	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="AuxiliaryData">
-		<xs:restriction base="xs:string">
-			<xs:maxLength value="128"/>
-		</xs:restriction>
-	</xs:simpleType>
 	<!--===============================-->
 	<xs:simpleType name="MoveStatus">
 		<xs:restriction base="xs:string">

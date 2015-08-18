@@ -98,11 +98,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 							<xs:documentation>System capabilities.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="Misc" type="tds:MiscCapabilities" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Capabilities that do not fit in any of the other categories.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 				</xs:sequence>
 			</xs:complexType>
 			<xs:element name="Capabilities" type="tds:DeviceServiceCapabilities"/>
@@ -194,15 +189,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				<xs:attribute name="StorageConfiguration" type="xs:boolean">
 					<xs:annotation>
 						<xs:documentation>Indicates support for storage configuration interfaces.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:complexType>
-			<!--===============================-->
-			<xs:complexType name="MiscCapabilities">
-				<xs:attribute name="AuxiliaryCommands" type="tt:StringAttrList">
-					<xs:annotation>
-						<xs:documentation>Lists of commands supported by SendAuxiliaryCommand.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:anyAttribute processContents="lax"/>
@@ -1130,21 +1116,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				</xs:complexType>
 			</xs:element>
 			<!--===============================-->
-			<xs:element name="SendAuxiliaryCommand">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="AuxiliaryCommand" type="tt:AuxiliaryData" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="SendAuxiliaryCommandResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="AuxiliaryCommandResponse" type="tt:AuxiliaryData" minOccurs="0" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
 			<xs:element name="GetDot11Capabilities">
 				<xs:complexType>
 					<xs:sequence>
@@ -1623,12 +1594,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<wsdl:message name="SetRelayOutputStateResponse">
 		<wsdl:part name="parameters" element="tds:SetRelayOutputStateResponse"/>
 	</wsdl:message>
-	<wsdl:message name="SendAuxiliaryCommandRequest">
-		<wsdl:part name="parameters" element="tds:SendAuxiliaryCommand"/>
-	</wsdl:message>
-	<wsdl:message name="SendAuxiliaryCommandResponse">
-		<wsdl:part name="parameters" element="tds:SendAuxiliaryCommandResponse"/>
-	</wsdl:message>
 	<wsdl:message name="GetCACertificatesRequest">
 		<wsdl:part name="parameters" element="tds:GetCACertificates"/>
 	</wsdl:message>
@@ -2061,27 +2026,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				<br/>This method has been depricated with version 2.0. Refer to the DeviceIO service.</wsdl:documentation>
 			<wsdl:input message="tds:SetRelayOutputStateRequest"/>
 			<wsdl:output message="tds:SetRelayOutputStateResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="SendAuxiliaryCommand">
-			<wsdl:documentation>Manage auxiliary commands supported by a device, such as controlling an Infrared (IR) lamp, 
-				a heater or a wiper or a thermometer that is connected to the device.<br/>
-				The supported commands can be retrieved via the AuxiliaryCommands capability.<br/>
-				Although the name of the auxiliary commands can be freely defined, commands starting with the prefix tt: are 
-				reserved to define frequently used commands and these reserved commands shall all share the "tt:command|parameter" syntax.
-				<ul>
-					<li>tt:Wiper|On – Request to start the wiper.</li>
-					<li>tt:Wiper|Off – Request to stop the wiper.</li>
-					<li>tt:Washer|On – Request to start the washer.</li>
-					<li>tt:Washer|Off – Request to stop the washer.</li>
-					<li>tt:WashingProcedure|On – Request to start the washing procedure.</li>
-					<li>tt: WashingProcedure |Off – Request to stop the washing procedure.</li>
-					<li>tt:IRLamp|On – Request to turn ON an IR illuminator attached to the unit.</li>
-					<li>tt:IRLamp|Off – Request to turn OFF an IR illuminator attached to the unit.</li>
-					<li>tt:IRLamp|Auto – Request to configure an IR illuminator attached to the unit so that it automatically turns ON and OFF.</li>
-				</ul>
-				A device that indicates auxiliary service capability shall support this command.</wsdl:documentation>
-			<wsdl:input message="tds:SendAuxiliaryCommandRequest"/>
-			<wsdl:output message="tds:SendAuxiliaryCommandResponse"/>
 		</wsdl:operation>
 		<wsdl:operation name="GetCACertificates">
 			<wsdl:documentation>CA certificates will be loaded into a device and be used for the sake of following two cases.
@@ -2603,15 +2547,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</wsdl:operation>
 		<wsdl:operation name="SetRelayOutputState">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetRelayOutputState"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="SendAuxiliaryCommand">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SendAuxiliaryCommand"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
