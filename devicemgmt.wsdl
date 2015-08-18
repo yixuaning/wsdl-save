@@ -176,29 +176,9 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						<xs:documentation>Indicates support for remote discovery.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SystemBackup" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for system backup through MTOM.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
 				<xs:attribute name="SystemLogging" type="xs:boolean">
 					<xs:annotation>
 						<xs:documentation>Indicates support for retrieval of system logging through MTOM.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="FirmwareUpgrade" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for firmware upgrade through MTOM.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="HttpFirmwareUpgrade" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for firmware upgrade through HTTP.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="HttpSystemBackup" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for system backup through HTTP.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
 				<xs:attribute name="HttpSystemLogging" type="xs:boolean">
@@ -333,21 +313,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				</xs:complexType>
 			</xs:element>
 			<!--===============================-->
-			<xs:element name="UpgradeSystemFirmware">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Firmware" type="tt:AttachmentData"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="UpgradeSystemFirmwareResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
 			<xs:element name="SystemReboot">
 				<xs:complexType>
 					<xs:sequence/>
@@ -361,32 +326,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 								<xs:documentation>Contains the reboot message sent by the device.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="RestoreSystem">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="BackupFiles" type="tt:BackupFile" minOccurs="1" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="RestoreSystemResponse">
-				<xs:complexType>
-					<xs:sequence/>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetSystemBackup">
-				<xs:complexType>
-					<xs:sequence/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetSystemBackupResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="BackupFiles" type="tt:BackupFile" minOccurs="1" maxOccurs="unbounded"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -1615,7 +1554,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:sequence>
 						<xs:element name="SystemLogUris" type="tt:SystemLogUriList" minOccurs="0" maxOccurs="1"/>
 						<xs:element name="SupportInfoUri" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
-						<xs:element name="SystemBackupUri" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
 						<xs:element name="Extension" minOccurs="0">
 							<xs:complexType>
 								<xs:sequence>
@@ -1623,35 +1561,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="StartFirmwareUpgrade">
-				<xs:complexType>
-					<xs:sequence/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="StartFirmwareUpgradeResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="UploadUri" type="xs:anyURI"/>
-						<xs:element name="UploadDelay" type="xs:duration"/>
-						<xs:element name="ExpectedDownTime" type="xs:duration"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="StartSystemRestore">
-				<xs:complexType>
-					<xs:sequence/>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="StartSystemRestoreResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="UploadUri" type="xs:anyURI"/>
-						<xs:element name="ExpectedDownTime" type="xs:duration"/>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
@@ -1864,29 +1773,11 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<wsdl:message name="SetSystemFactoryDefaultResponse">
 		<wsdl:part name="parameters" element="tds:SetSystemFactoryDefaultResponse"/>
 	</wsdl:message>
-	<wsdl:message name="UpgradeSystemFirmwareRequest">
-		<wsdl:part name="parameters" element="tds:UpgradeSystemFirmware"/>
-	</wsdl:message>
-	<wsdl:message name="UpgradeSystemFirmwareResponse">
-		<wsdl:part name="parameters" element="tds:UpgradeSystemFirmwareResponse"/>
-	</wsdl:message>
 	<wsdl:message name="SystemRebootRequest">
 		<wsdl:part name="parameters" element="tds:SystemReboot"/>
 	</wsdl:message>
 	<wsdl:message name="SystemRebootResponse">
 		<wsdl:part name="parameters" element="tds:SystemRebootResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetSystemBackupRequest">
-		<wsdl:part name="parameters" element="tds:GetSystemBackup"/>
-	</wsdl:message>
-	<wsdl:message name="GetSystemBackupResponse">
-		<wsdl:part name="parameters" element="tds:GetSystemBackupResponse"/>
-	</wsdl:message>
-	<wsdl:message name="RestoreSystemRequest">
-		<wsdl:part name="parameters" element="tds:RestoreSystem"/>
-	</wsdl:message>
-	<wsdl:message name="RestoreSystemResponse">
-		<wsdl:part name="parameters" element="tds:RestoreSystemResponse"/>
 	</wsdl:message>
 	<wsdl:message name="GetSystemSupportInformationRequest">
 		<wsdl:part name="parameters" element="tds:GetSystemSupportInformation"/>
@@ -2272,18 +2163,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<wsdl:message name="GetSystemUrisResponse">
 		<wsdl:part name="parameters" element="tds:GetSystemUrisResponse"/>
 	</wsdl:message>
-	<wsdl:message name="StartFirmwareUpgradeRequest">
-		<wsdl:part name="parameters" element="tds:StartFirmwareUpgrade"/>
-	</wsdl:message>
-	<wsdl:message name="StartFirmwareUpgradeResponse">
-		<wsdl:part name="parameters" element="tds:StartFirmwareUpgradeResponse"/>
-	</wsdl:message>
-	<wsdl:message name="StartSystemRestoreRequest">
-		<wsdl:part name="parameters" element="tds:StartSystemRestore"/>
-	</wsdl:message>
-	<wsdl:message name="StartSystemRestoreResponse">
-		<wsdl:part name="parameters" element="tds:StartSystemRestoreResponse"/>
-	</wsdl:message>
 	
 	<wsdl:message name="GetStorageConfigurationsRequest">
 		<wsdl:part name="parameters" element="tds:GetStorageConfigurations"/>
@@ -2358,41 +2237,16 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<wsdl:input message="tds:SetSystemFactoryDefaultRequest"/>
 			<wsdl:output message="tds:SetSystemFactoryDefaultResponse"/>
 		</wsdl:operation>
-		<wsdl:operation name="UpgradeSystemFirmware">
-			<wsdl:documentation>This operation upgrades a device firmware version. After a successful upgrade the response
-				message is sent before the device reboots. The device should support firmware upgrade
-				through the UpgradeSystemFirmware command. The exact format of the firmware data is
-				outside the scope of this standard.</wsdl:documentation>
-			<wsdl:input message="tds:UpgradeSystemFirmwareRequest"/>
-			<wsdl:output message="tds:UpgradeSystemFirmwareResponse"/>
-		</wsdl:operation>
 		<wsdl:operation name="SystemReboot">
 			<wsdl:documentation>This operation reboots the device.</wsdl:documentation>
 			<wsdl:input message="tds:SystemRebootRequest"/>
 			<wsdl:output message="tds:SystemRebootResponse"/>
 		</wsdl:operation>
-		<wsdl:operation name="RestoreSystem">
-			<wsdl:documentation>This operation restores the system backup configuration files(s) previously retrieved from a
-				device. The device should support restore of backup configuration file(s) through the
-				RestoreSystem command. The exact format of the backup configuration file(s) is outside the
-				scope of this standard. If the command is supported, it shall accept backup files returned by
-				the GetSystemBackup command.</wsdl:documentation>
-			<wsdl:input message="tds:RestoreSystemRequest"/>
-			<wsdl:output message="tds:RestoreSystemResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetSystemBackup">
-			<wsdl:documentation>This operation is retrieves system backup configuration file(s) from a device. The device
-				should support return of back up configuration file(s) through the GetSystemBackup command.
-				The backup is returned with reference to a name and mime-type together with binary data.
-				The exact format of the backup configuration files is outside the scope of this standard.</wsdl:documentation>
-			<wsdl:input message="tds:GetSystemBackupRequest"/>
-			<wsdl:output message="tds:GetSystemBackupResponse"/>
-		</wsdl:operation>
 		<wsdl:operation name="GetSystemLog">
 			<wsdl:documentation>This operation gets a system log from the device. The exact format of the system logs is outside the scope of this standard.</wsdl:documentation>
 			<wsdl:input message="tds:GetSystemLogRequest"/>
 			<wsdl:output message="tds:GetSystemLogResponse"/>
-		</wsdl:operation>
+		</wsdl:operation>	
 		<wsdl:operation name="GetSystemSupportInformation">
 			<wsdl:documentation>This operation gets arbitary device diagnostics information from the device.</wsdl:documentation>
 			<wsdl:input message="tds:GetSystemSupportInformationRequest"/>
@@ -2927,46 +2781,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<wsdl:input message="tds:GetSystemUrisRequest"/>
 			<wsdl:output message="tds:GetSystemUrisResponse"/>
 		</wsdl:operation>
-		<wsdl:operation name="StartFirmwareUpgrade">
-			<wsdl:documentation>This operation initiates a firmware upgrade using the HTTP POST mechanism. The response
-				to the command includes an HTTP URL to which the upgrade file may be uploaded. The
-				actual upgrade takes place as soon as the HTTP POST operation has completed. The device
-				should support firmware upgrade through the StartFirmwareUpgrade command. The exact
-				format of the firmware data is outside the scope of this specification.
-				Firmware upgrade over HTTP may be achieved using the following steps:<ol>
-					<li>Client calls StartFirmwareUpgrade.</li>
-					<li>Server responds with upload URI and optional delay value.</li>
-					<li>Client waits for delay duration if specified by server.</li>
-					<li>Client transmits the firmware image to the upload URI using HTTP POST.</li>
-					<li>Server reprograms itself using the uploaded image, then reboots.</li>
-				</ol>
-				If the firmware upgrade fails because the upgrade file was invalid, the HTTP POST response
-				shall be “415 Unsupported Media Type”. If the firmware upgrade fails due to an error at the
-				device, the HTTP POST response shall be “500 Internal Server Error”.<br/>
-				The value of the Content-Type header in the HTTP POST request shall be “application/octetstream”.</wsdl:documentation>
-			<wsdl:input message="tds:StartFirmwareUpgradeRequest"/>
-			<wsdl:output message="tds:StartFirmwareUpgradeResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="StartSystemRestore">
-			<wsdl:documentation>This operation initiates a system restore from backed up configuration data using the HTTP
-				POST mechanism. The response to the command includes an HTTP URL to which the backup
-				file may be uploaded. The actual restore takes place as soon as the HTTP POST operation
-				has completed. Devices should support system restore through the StartSystemRestore
-				command. The exact format of the backup configuration data is outside the scope of this
-				specification.<br/>
-				System restore over HTTP may be achieved using the following steps:<ol>
-					<li>Client calls StartSystemRestore.</li>
-					<li>Server responds with upload URI.</li>
-					<li>Client transmits the configuration data to the upload URI using HTTP POST.</li>
-					<li>Server applies the uploaded configuration, then reboots if necessary.</li>
-				</ol>
-				If the system restore fails because the uploaded file was invalid, the HTTP POST response
-				shall be “415 Unsupported Media Type”. If the system restore fails due to an error at the
-				device, the HTTP POST response shall be “500 Internal Server Error”.<br/>
-				The value of the Content-Type header in the HTTP POST request shall be “application/octetstream”.</wsdl:documentation>
-			<wsdl:input message="tds:StartSystemRestoreRequest"/>
-			<wsdl:output message="tds:StartSystemRestoreResponse"/>
-		</wsdl:operation>
 
 		<wsdl:operation name="GetStorageConfigurations">
 			<wsdl:documentation>
@@ -3062,35 +2876,8 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				<soap:body use="literal"/>
 			</wsdl:output>
 		</wsdl:operation>
-		<wsdl:operation name="UpgradeSystemFirmware">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/UpgradeSystemFirmware"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
 		<wsdl:operation name="SystemReboot">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SystemReboot"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="RestoreSystem">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/RestoreSystem"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetSystemBackup">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetSystemBackup"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
@@ -3658,33 +3445,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</wsdl:operation>
 		<wsdl:operation name="ScanAvailableDot11Networks">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/ScanAvailableDot11Networks"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetSystemUris">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetSystemUris"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="StartFirmwareUpgrade">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/StartFirmwareUpgrade"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="StartSystemRestore">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/StartSystemRestore"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>

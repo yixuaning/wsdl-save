@@ -2800,19 +2800,9 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 					<xs:documentation>Indicates whether or not remote discovery is supported.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SystemBackup" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not system backup is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="SystemLogging" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicates whether or not system logging is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FirmwareUpgrade" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not firmware upgrade is supported.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SupportedVersions" type="tt:OnvifVersion" maxOccurs="unbounded">
@@ -2828,8 +2818,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:complexType name="SystemCapabilitiesExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="HttpFirmwareUpgrade" type="xs:boolean" minOccurs="0"/>
-			<xs:element name="HttpSystemBackup" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="HttpSystemLogging" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="HttpSupportInformation" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="Extension" type="tt:SystemCapabilitiesExtension2" minOccurs="0"/>
