@@ -2339,11 +2339,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 					<xs:documentation>Indicates whether or not remote discovery is supported.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="SystemLogging" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not system logging is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="SupportedVersions" type="tt:OnvifVersion" maxOccurs="unbounded">
 				<xs:annotation>
 					<xs:documentation>Indicates supported ONVIF version(s).</xs:documentation>
@@ -2357,7 +2352,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:complexType name="SystemCapabilitiesExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="HttpSystemLogging" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="HttpSupportInformation" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="Extension" type="tt:SystemCapabilitiesExtension2" minOccurs="0"/>
 		</xs:sequence>
@@ -2511,39 +2505,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<!--===============================-->
 	<!--    System Related Types       -->
 	<!--===============================-->
-	<xs:simpleType name="SystemLogType">
-		<xs:annotation>
-			<xs:documentation>Enumeration describing the available system log modes.</xs:documentation>
-		</xs:annotation>
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="System">
-				<xs:annotation>
-					<xs:documentation>Indicates that a system log is requested.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-			<xs:enumeration value="Access">
-				<xs:annotation>
-					<xs:documentation>Indicates that a access log is requested.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="SystemLog">
-		<xs:sequence>
-			<xs:element name="Binary" type="tt:AttachmentData" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The log information as attachment data.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="String" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>The log information as character data.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
 	<xs:complexType name="SupportInformation">
 		<xs:sequence>
 			<xs:element name="Binary" type="tt:AttachmentData" minOccurs="0">
@@ -2582,21 +2543,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="Name" type="xs:string"/>
 			<xs:element name="Data" type="tt:AttachmentData"/>
 		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SystemLogUriList">
-		<xs:sequence>
-			<xs:element name="SystemLog" type="tt:SystemLogUri" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SystemLogUri">
-		<xs:sequence>
-			<xs:element name="Type" type="tt:SystemLogType"/>
-			<xs:element name="Uri" type="xs:anyURI"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
 	<xs:simpleType name="FactoryDefaultType">

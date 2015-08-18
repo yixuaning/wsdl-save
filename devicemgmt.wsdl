@@ -171,16 +171,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						<xs:documentation>Indicates support for remote discovery.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="SystemLogging" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for retrieval of system logging through MTOM.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="HttpSystemLogging" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for retrieval of system logging through HTTP.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
 				<xs:attribute name="HttpSupportInformation" type="xs:boolean">
 					<xs:annotation>
 						<xs:documentation>Indicates support for retrieving support information through HTTP.</xs:documentation>
@@ -327,29 +317,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						<xs:element name="SupportInformation" type="tt:SupportInformation">
 							<xs:annotation>
 								<xs:documentation>Contains the arbitary device diagnostics information.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetSystemLog">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="LogType" type="tt:SystemLogType">
-							<xs:annotation>
-								<xs:documentation>Specifies the type of system log to get.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetSystemLogResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="SystemLog" type="tt:SystemLog">
-							<xs:annotation>
-								<xs:documentation>Contains the system log information.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 					</xs:sequence>
@@ -1169,7 +1136,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<xs:element name="GetSystemUrisResponse">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="SystemLogUris" type="tt:SystemLogUriList" minOccurs="0" maxOccurs="1"/>
 						<xs:element name="SupportInfoUri" type="xs:anyURI" minOccurs="0" maxOccurs="1"/>
 						<xs:element name="Extension" minOccurs="0">
 							<xs:complexType>
@@ -1401,12 +1367,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	</wsdl:message>
 	<wsdl:message name="GetSystemSupportInformationResponse">
 		<wsdl:part name="parameters" element="tds:GetSystemSupportInformationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetSystemLogRequest">
-		<wsdl:part name="parameters" element="tds:GetSystemLog"/>
-	</wsdl:message>
-	<wsdl:message name="GetSystemLogResponse">
-		<wsdl:part name="parameters" element="tds:GetSystemLogResponse"/>
 	</wsdl:message>
 	<wsdl:message name="GetScopesRequest">
 		<wsdl:part name="parameters" element="tds:GetScopes"/>
@@ -1751,11 +1711,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<wsdl:input message="tds:SystemRebootRequest"/>
 			<wsdl:output message="tds:SystemRebootResponse"/>
 		</wsdl:operation>
-		<wsdl:operation name="GetSystemLog">
-			<wsdl:documentation>This operation gets a system log from the device. The exact format of the system logs is outside the scope of this standard.</wsdl:documentation>
-			<wsdl:input message="tds:GetSystemLogRequest"/>
-			<wsdl:output message="tds:GetSystemLogResponse"/>
-		</wsdl:operation>	
 		<wsdl:operation name="GetSystemSupportInformation">
 			<wsdl:documentation>This operation gets arbitary device diagnostics information from the device.</wsdl:documentation>
 			<wsdl:input message="tds:GetSystemSupportInformationRequest"/>
@@ -2250,15 +2205,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</wsdl:operation>
 		<wsdl:operation name="SystemReboot">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SystemReboot"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetSystemLog">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetSystemLog"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
