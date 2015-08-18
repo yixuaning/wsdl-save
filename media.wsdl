@@ -1568,11 +1568,6 @@ AudioOutputConfiguration shall be removed.</xs:documentation>
 								<xs:documentation>If a device limits the number of instances for respective Video Codecs the response contains the information how many H264 streams can be set up at the same time per VideoSource.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
-						<xs:element name="MPEG4" type="xs:int" minOccurs="0">
-							<xs:annotation>
-								<xs:documentation>If a device limits the number of instances for respective Video Codecs the response contains the information how many Mpeg4 streams can be set up at the same time per VideoSource.</xs:documentation>
-							</xs:annotation>
-						</xs:element>
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>

@@ -511,11 +511,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 							<xs:documentation>Optional element to configure rate control related parameters.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="MPEG4" type="tt:Mpeg4Configuration" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Optional element to configure Mpeg4 related parameters.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="H264" type="tt:H264Configuration" minOccurs="0">
 						<xs:annotation>
 							<xs:documentation>Optional element to configure H.264 related parameters.</xs:documentation>
@@ -541,15 +536,7 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<xs:simpleType name="VideoEncoding">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="JPEG"/>
-			<xs:enumeration value="MPEG4"/>
 			<xs:enumeration value="H264"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="Mpeg4Profile">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="SP"/>
-			<xs:enumeration value="ASP"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!--===============================-->
@@ -597,21 +584,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</xs:sequence>
 	</xs:complexType>
 	<!--===============================-->
-	<xs:complexType name="Mpeg4Configuration">
-		<xs:sequence>
-			<xs:element name="GovLength" type="xs:int">
-				<xs:annotation>
-					<xs:documentation>Determines the interval in which the I-Frames will be coded. An entry of 1 indicates I-Frames are continuously generated. An entry of 2 indicates that every 2nd image is an I-Frame, and 3 only every 3rd frame, etc. The frames in between are coded as P or B Frames.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Mpeg4Profile" type="tt:Mpeg4Profile">
-				<xs:annotation>
-					<xs:documentation>the Mpeg4 profile, either simple profile (SP) or advanced simple profile (ASP)</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
 	<xs:complexType name="H264Configuration">
 		<xs:sequence>
 			<xs:element name="GovLength" type="xs:int">
@@ -639,11 +611,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:documentation>Optional JPEG encoder settings ranges (See also Extension element).</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="MPEG4" type="tt:Mpeg4Options" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional MPEG-4 encoder settings ranges (See also Extension element).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="H264" type="tt:H264Options" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional H.264 encoder settings ranges (See also Extension element).</xs:documentation>
@@ -660,11 +627,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<xs:element name="JPEG" type="tt:JpegOptions2" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Optional JPEG encoder settings ranges.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="MPEG4" type="tt:Mpeg4Options2" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Optional MPEG-4 encoder settings ranges.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="H264" type="tt:H264Options2" minOccurs="0">
@@ -705,52 +667,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<xs:complexType name="JpegOptions2">
 		<xs:complexContent>
 			<xs:extension base="tt:JpegOptions">
-				<xs:sequence>
-					<xs:element name="BitrateRange" type="tt:IntRange">
-						<xs:annotation>
-							<xs:documentation>Supported range of encoded bitrate in kbps.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Mpeg4Options">
-		<xs:sequence>
-			<xs:element name="ResolutionsAvailable" type="tt:VideoResolution" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported image sizes.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="GovLengthRange" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported group of Video frames length. This value typically corresponds to the I-Frame distance.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="FrameRateRange" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported frame rate in fps (frames per second).</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="EncodingIntervalRange" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported encoding interval range. The encoding interval corresponds to the number of frames devided by the encoded frames. An encoding interval value of "1" means that all frames are encoded.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Mpeg4ProfilesSupported" type="tt:Mpeg4Profile" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported MPEG-4 profiles.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Mpeg4Options2">
-		<xs:complexContent>
-			<xs:extension base="tt:Mpeg4Options">
 				<xs:sequence>
 					<xs:element name="BitrateRange" type="tt:IntRange">
 						<xs:annotation>
@@ -1178,11 +1094,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 					<xs:documentation>If the device is able to decode H.264 streams this element describes the supported codecs and configurations</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Mpeg4DecOptions" type="tt:Mpeg4DecOptions" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>If the device is able to decode Mpeg4 streams this element describes the supported codecs and configurations</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Extension" type="tt:VideoDecoderConfigurationOptionsExtension" minOccurs="0"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -1230,33 +1141,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<xs:element name="SupportedFrameRate" type="tt:IntRange">
 				<xs:annotation>
 					<xs:documentation>Supported Jpeg framerate range in fps</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Mpeg4DecOptions">
-		<xs:sequence>
-			<xs:element name="ResolutionsAvailable" type="tt:VideoResolution" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported Mpeg4 Video Resolutions</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupportedMpeg4Profiles" type="tt:Mpeg4Profile" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of supported Mpeg4 Profiles (either SP or ASP) </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupportedInputBitrate" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported Mpeg4 bitrate range in kbps</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SupportedFrameRate" type="tt:IntRange">
-				<xs:annotation>
-					<xs:documentation>Supported Mpeg4 framerate range in fps</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
