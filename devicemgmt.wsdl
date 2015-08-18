@@ -93,11 +93,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 							<xs:documentation>Network capabilities.</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="Security" type="tds:SecurityCapabilities">
-						<xs:annotation>
-							<xs:documentation>Security capabilities.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="System" type="tds:SystemCapabilities">
 						<xs:annotation>
 							<xs:documentation>System capabilities.</xs:documentation>
@@ -164,99 +159,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 			<xs:simpleType name="EAPMethodTypes">
 				<xs:list itemType="xs:int"/>
 			</xs:simpleType>
-			<xs:complexType name="SecurityCapabilities">
-				<xs:attribute name="TLS1.0" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for TLS 1.0.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="TLS1.1" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for TLS 1.1.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="TLS1.2" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for TLS 1.2.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="OnboardKeyGeneration" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for onboard key generation.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="AccessPolicyConfig" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for access policy configuration.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="DefaultAccessPolicy" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for the ONVIF default access policy.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="Dot1X" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for IEEE 802.1X configuration.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="RemoteUserHandling" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for remote user configuration. Used when accessing another device.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="X.509Token" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS-Security X.509 token.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="SAMLToken" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS-Security SAML token.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="KerberosToken" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS-Security Kerberos token.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="UsernameToken" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS-Security Username token.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="HttpDigest" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS over HTTP digest authenticated communication layer.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="RELToken" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for WS-Security REL token.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="SupportedEAPMethods" type="tds:EAPMethodTypes">
-					<xs:annotation>
-						<xs:documentation>EAP Methods supported by the device. The int values refer to the <a href="http://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml">IANA EAP Registry</a>.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="MaxUsers" type="xs:int">
-					<xs:annotation>
-						<xs:documentation>The maximum number of users that the device supports.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="MaxUserNameLength" type="xs:int">
-					<xs:annotation>
-						<xs:documentation>Maximum number of characters supported for the username by CreateUsers.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="MaxPasswordLength" type="xs:int">
-					<xs:annotation>
-						<xs:documentation>Maximum number of characters supported for the password by CreateUsers and SetUser.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:complexType>
 			<!--===============================-->
 			<xs:complexType name="SystemCapabilities">
 				<xs:attribute name="DiscoveryResolve" type="xs:boolean">

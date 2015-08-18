@@ -2312,7 +2312,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="Mode" type="tt:Dot11StationMode"/>
 			<xs:element name="Alias" type="tt:Name"/>
 			<xs:element name="Priority" type="tt:NetworkInterfaceConfigPriority"/>
-			<xs:element name="Security" type="tt:Dot11SecurityConfiguration"/>
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -2606,11 +2605,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 					<xs:documentation>I/O capabilities.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Security" type="tt:SecurityCapabilities" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Security capabilities.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Extension" type="tt:DeviceCapabilitiesExtension" minOccurs="0"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
@@ -2785,74 +2779,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<!--===============================-->
 	<xs:complexType name="NetworkCapabilitiesExtension2">
 		<xs:sequence>
-			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SecurityCapabilities">
-		<xs:sequence>
-			<xs:element name="TLS1.1" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not TLS 1.1 is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="TLS1.2" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not TLS 1.2 is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="OnboardKeyGeneration" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not onboard key generation is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="AccessPolicyConfig" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not access policy configuration is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="X.509Token" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not WS-Security X.509 token is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SAMLToken" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not WS-Security SAML token is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="KerberosToken" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not WS-Security Kerberos token is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="RELToken" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not WS-Security REL token is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:SecurityCapabilitiesExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SecurityCapabilitiesExtension">
-		<xs:sequence>
-			<xs:element name="TLS1.0" type="xs:boolean"/>
-			<xs:element name="Extension" type="tt:SecurityCapabilitiesExtension2" minOccurs="0"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SecurityCapabilitiesExtension2">
-		<xs:sequence>
-			<xs:element name="Dot1X" type="xs:boolean"/>
-			<xs:element name="SupportedEAPMethod" type="xs:int" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>EAP Methods supported by the device. The int values refer to the <a href="http://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml">IANA EAP Registry</a>.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="RemoteUserHandling" type="xs:boolean"/>
 			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
