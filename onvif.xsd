@@ -813,11 +813,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 							</xs:documentation>
 						</xs:annotation>
 					</xs:element>
-					<xs:element name="Analytics" type="xs:boolean" minOccurs="0">
-						<xs:annotation>
-							<xs:documentation>Defines whether the streamed metadata will include metadata from the analytics engines (video, cell motion, audio etc.)</xs:documentation>
-						</xs:annotation>
-					</xs:element>
 					<xs:element name="Multicast" type="tt:MulticastConfiguration">
 						<xs:annotation>
 							<xs:documentation>Defines the multicast settings that could be used for video streaming.</xs:documentation>
@@ -829,7 +824,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						</xs:annotation>
 					</xs:element>
 					<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="AnalyticsEngineConfiguration" type="tt:AnalyticsEngineConfiguration" minOccurs="0"/>
 					<xs:element name="Extension" type="tt:MetadataConfigurationExtension" minOccurs="0"/>
 				</xs:sequence>
 				<xs:attribute name="CompressionType" type="xs:string">
@@ -2086,7 +2080,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:simpleType name="CapabilityCategory">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="All"/>
-			<xs:enumeration value="Analytics"/>
 			<xs:enumeration value="Device"/>
 			<xs:enumeration value="Events"/>
 			<xs:enumeration value="Imaging"/>
@@ -2097,11 +2090,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<!--===============================-->
 	<xs:complexType name="Capabilities">
 		<xs:sequence>
-			<xs:element name="Analytics" type="tt:AnalyticsCapabilities" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Analytics capabilities</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="Device" type="tt:DeviceCapabilities" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Device capabilities</xs:documentation>
@@ -2141,7 +2129,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="Search" type="tt:SearchCapabilities" minOccurs="0"/>
 			<xs:element name="Replay" type="tt:ReplayCapabilities" minOccurs="0"/>
 			<xs:element name="Receiver" type="tt:ReceiverCapabilities" minOccurs="0"/>
-			<xs:element name="AnalyticsDevice" type="tt:AnalyticsDeviceCapabilities" minOccurs="0"/>
 			<xs:element name="Extensions" type="tt:CapabilitiesExtension2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -2150,28 +2137,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		<xs:sequence>
 			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsCapabilities">
-		<xs:sequence>
-			<xs:element name="XAddr" type="xs:anyURI">
-				<xs:annotation>
-					<xs:documentation>Analytics service URI.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="RuleSupport" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not rules are supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="AnalyticsModuleSupport" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not modules are supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
 	<xs:complexType name="DeviceCapabilities">
@@ -2537,25 +2502,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsDeviceCapabilities">
-		<xs:sequence>
-			<xs:element name="XAddr" type="xs:anyURI"/>
-			<xs:element name="RuleSupport" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Obsolete property.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:AnalyticsDeviceExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsDeviceExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
 	</xs:complexType>
 	<!--===============================-->
 	<!--===============================-->
@@ -6089,243 +6035,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
 	<!--===============================-->
 	<!--    Analytics Configuration    -->
 	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineConfiguration">
-		<xs:sequence>
-			<xs:element name="AnalyticsModule" type="tt:Config" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:AnalyticsEngineConfigurationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="RuleEngineConfiguration">
-		<xs:sequence>
-			<xs:element name="Rule" type="tt:Config" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:RuleEngineConfigurationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="RuleEngineConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Config">
-		<xs:sequence>
-			<xs:element name="Parameters" type="tt:ItemList">
-				<xs:annotation>
-					<xs:documentation>List of configuration parameters as defined in the correspding description.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:sequence>
-		<xs:attribute name="Name" type="xs:string" use="required">
-			<xs:annotation>
-				<xs:documentation>Name of the configuration.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="Type" type="xs:QName" use="required">
-			<xs:annotation>
-				<xs:documentation>Type of the configuration represented by a unique QName. The Type characterizes a ConfigDescription defining the Parameters.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="ConfigDescription">
-		<xs:sequence>
-			<xs:element name="Parameters" type="tt:ItemListDescription">
-				<xs:annotation>
-					<xs:documentation>
-						List describing the configuration parameters. The names of the parameters must be unique. If possible SimpleItems
-						should be used to transport the information to ease parsing of dynamically defined messages by a client
-						application.
-					</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Messages" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>
-						The analytics modules and rule engine produce Events, which must be listed within the Analytics Module Description. In order to do so
-						the structure of the Message is defined and consists of three groups: Source, Key, and Data. It is recommended to use SimpleItemDescriptions wherever applicable.
-						The name of all Items must be unique within all Items contained in any group of this Message.
-						Depending on the component multiple parameters or none may be needed to identify the component uniquely.
-					</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="tt:MessageDescription">
-							<xs:sequence>
-								<xs:element name="ParentTopic" type="xs:string">
-									<xs:annotation>
-										<xs:documentation>
-											The ParentTopic labels the message (e.g. "nn:RuleEngine/LineCrossing"). The real message can extend the ParentTopic
-											by for example the name of the instaniated rule (e.g. "nn:RuleEngine/LineCrossing/corssMyFirstLine").
-											Even without knowing the complete topic name, the subscriber will be able to distiguish the
-											messages produced by different rule instances of the same type via the Source fields of the message.
-											There the name of the rule instance, which produced the message, must be listed.
-										</xs:documentation>
-									</xs:annotation>
-								</xs:element>
-							</xs:sequence>
-						</xs:extension>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="Extension" type="tt:ConfigDescriptionExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:attribute name="Name" type="xs:QName" use="required">
-			<xs:annotation>
-				<xs:documentation>XML Type of the Configuration (e.g. "tt::LineDetector"). </xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="ConfigDescriptionExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SupportedRules">
-		<xs:sequence>
-			<xs:element name="RuleContentSchemaLocation" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Lists the location of all schemas that are referenced in the rules.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="RuleDescription" type="tt:ConfigDescription" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of rules supported by the Video Analytics configuration..</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:SupportedRulesExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SupportedRulesExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SupportedAnalyticsModules">
-		<xs:sequence>
-			<xs:element name="AnalyticsModuleContentSchemaLocation" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>It optionally contains a list of URLs that provide the location of schema files.
-        These schema files describe the types and elements used in the analytics module descriptions.
-        If the analytics module descriptions reference types or elements of the ONVIF schema file,
-        the ONVIF schema file MUST be explicitly listed.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="AnalyticsModuleDescription" type="tt:ConfigDescription" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:SupportedAnalyticsModulesExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SupportedAnalyticsModulesExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PolygonConfiguration">
-		<xs:sequence>
-			<xs:element name="Polygon" type="tt:Polygon">
-				<xs:annotation>
-					<xs:documentation>Contains Polygon configuration for rule parameters</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PolylineArray">
-		<xs:sequence>
-			<xs:element name="Segment" type="tt:Polyline" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Contains array of Polyline</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:PolylineArrayExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PolylineArrayExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="PolylineArrayConfiguration">
-		<xs:sequence>
-			<xs:element name="PolylineArray" type="tt:PolylineArray">
-				<xs:annotation>
-					<xs:documentation>Contains PolylineArray configuration data</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MotionExpression">
-		<xs:sequence>
-			<xs:element name="Expression" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Motion Expression data structure contains motion expression which is based on Scene Descriptor schema with XPATH syntax. The Type argument could allow introduction of different dialects </xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="Type" type="xs:string"/>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MotionExpressionConfiguration">
-		<xs:sequence>
-			<xs:element name="MotionExpression" type="tt:MotionExpression">
-				<xs:annotation>
-					<xs:documentation>Contains Rule MotionExpression configuration</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="CellLayout">
-		<xs:sequence>
-			<xs:element name="Transformation" type="tt:Transformation">
-				<xs:annotation>
-					<xs:documentation>Mapping of the cell grid to the Video frame. The cell grid is starting from the upper left corner and x dimension is going from left to right and the y dimension from up to down.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:attribute name="Columns" type="xs:integer" use="required">
-			<xs:annotation>
-				<xs:documentation>Number of columns of the cell grid (x dimension)</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="Rows" type="xs:integer" use="required">
-			<xs:annotation>
-				<xs:documentation>Number of rows of the cell grid (y dimension)</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
 	<!--===============================-->
 	<!--End, Event and Analytics Types -->
 	<!--===============================-->
@@ -6336,7 +6045,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
 	<xs:complexType name="MetadataStream">
 		<xs:sequence>
 			<xs:choice minOccurs="0" maxOccurs="unbounded">
-				<xs:element name="VideoAnalytics" type="tt:VideoAnalyticsStream"/>
 				<xs:element name="PTZ" type="tt:PTZStream"/>
 				<xs:element name="Event" type="tt:EventStream"/>
 				<xs:element name="Extension" type="tt:MetadataStreamExtension"/>
@@ -6348,7 +6056,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
 	<xs:complexType name="MetadataStreamExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="AudioAnalyticsStream" type="tt:AudioAnalyticsStream" minOccurs="0"/>
 			<xs:element name="Extension" type="tt:MetadataStreamExtension2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -6360,13 +6067,6 @@ If set to 0.0, infinity will be used.</xs:documentation>
 		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
-	<xs:complexType name="AudioAnalyticsStream">
-		<xs:sequence>
-			<xs:element name="AudioDescriptor" type="tt:AudioDescriptor" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:AudioAnalyticsStreamExtension" minOccurs="0" />
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
 	<!--===============================-->
 	<xs:complexType name="AudioDescriptor">
 		<xs:sequence>
@@ -6377,27 +6077,8 @@ If set to 0.0, infinity will be used.</xs:documentation>
 		<xs:anyAttribute processContents="lax"/>
 	</xs:complexType>
 	<!--===============================-->
-	<xs:complexType name="AudioAnalyticsStreamExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
 	<!--===============================-->
 	<xs:element name="MetadataStream" type="tt:MetadataStream"/>
-	<!--===============================-->
-	<xs:complexType name="VideoAnalyticsStream">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element name="Frame" type="tt:Frame"/>
-			<xs:element name="Extension" type="tt:VideoAnalyticsStreamExtension"/>
-		</xs:choice>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="VideoAnalyticsStreamExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<!--===============================-->
 	<xs:complexType name="PTZStream">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -7279,11 +6960,6 @@ and sample rate. </xs:documentation>
 					<xs:documentation>Indicates that there can be PTZ data in the metadata track in the specified time interval.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="CanContainAnalytics" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates that there can be analytics data in the metadata track in the specified time interval.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element name="CanContainNotifications" type="xs:boolean">
 				<xs:annotation>
 					<xs:documentation>Indicates that there can be notifications in the metadata track in the specified time interval.</xs:documentation>
@@ -7627,164 +7303,6 @@ and sample rate. </xs:documentation>
 	<!--===============================-->
 	<!--         Analytics Device Types         -->
 	<!--===============================-->
-	<xs:complexType name="AnalyticsEngine">
-		<xs:complexContent>
-			<xs:extension base="tt:ConfigurationEntity">
-				<xs:sequence>
-					<xs:element name="AnalyticsEngineConfiguration" type="tt:AnalyticsDeviceEngineConfiguration"/>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsDeviceEngineConfiguration">
-		<xs:sequence>
-			<xs:element name="EngineConfiguration" type="tt:EngineConfiguration" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:AnalyticsDeviceEngineConfigurationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsDeviceEngineConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EngineConfiguration">
-		<xs:sequence>
-			<xs:element name="AnalyticsEngineInputInfo" type="tt:AnalyticsEngineInputInfo"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineInputInfo">
-		<xs:sequence>
-			<xs:element name="InputInfo" type="tt:Config" minOccurs="0"/>
-			<xs:element name="Extension" type="tt:AnalyticsEngineInputInfoExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineInputInfoExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineInput">
-		<xs:complexContent>
-			<xs:extension base="tt:ConfigurationEntity">
-				<xs:sequence>
-					<xs:element name="SourceIdentification" type="tt:SourceIdentification"/>
-					<xs:element name="VideoInput" type="tt:VideoEncoderConfiguration"/>
-					<xs:element name="MetadataInput" type="tt:MetadataInput"/>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SourceIdentification">
-		<xs:sequence>
-			<xs:element name="Name" type="xs:string"/>
-			<xs:element name="Token" type="tt:ReferenceToken" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:SourceIdentificationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="SourceIdentificationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataInput">
-		<xs:sequence>
-			<xs:element name="MetadataConfig" type="tt:Config" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Extension" type="tt:MetadataInputExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="MetadataInputExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsEngineControl">
-		<xs:complexContent>
-			<xs:extension base="tt:ConfigurationEntity">
-				<xs:sequence>
-					<xs:element name="EngineToken" type="tt:ReferenceToken">
-						<xs:annotation>
-							<xs:documentation>Token of the analytics engine (AnalyticsEngine) being controlled.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="EngineConfigToken" type="tt:ReferenceToken">
-						<xs:annotation>
-							<xs:documentation>Token of the analytics engine configuration (VideoAnalyticsConfiguration) in effect.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="InputToken" type="tt:ReferenceToken" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:documentation>Tokens of the input (AnalyticsEngineInput) configuration applied.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="ReceiverToken" type="tt:ReferenceToken" maxOccurs="unbounded">
-						<xs:annotation>
-							<xs:documentation>Tokens of the receiver providing media input data. The order of ReceiverToken shall exactly match the order of InputToken.</xs:documentation>
-						</xs:annotation>
-					</xs:element>
-					<xs:element name="Multicast" type="tt:MulticastConfiguration" minOccurs="0"/>
-					<xs:element name="Subscription" type="tt:Config"/>
-					<xs:element name="Mode" type="tt:ModeOfOperation"/>
-					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:anyAttribute processContents="lax"/>
-			</xs:extension>
-		</xs:complexContent>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="ModeOfOperation">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Idle"/>
-			<xs:enumeration value="Active"/>
-			<xs:enumeration value="Unknown">
-				<xs:annotation>
-					<xs:documentation>This case should never happen.</xs:documentation>
-				</xs:annotation>
-			</xs:enumeration>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsStateInformation">
-		<xs:sequence>
-			<xs:element name="AnalyticsEngineControlToken" type="tt:ReferenceToken">
-				<xs:annotation>
-					<xs:documentation>Token of the control object whose status is requested.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="State" type="tt:AnalyticsState"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="AnalyticsState">
-		<xs:sequence>
-			<xs:element name="Error" type="xs:string" minOccurs="0"/>
-			<xs:element name="State" type="xs:string"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
 	<!--===============================-->
 	<!--         End, Analytics Device Types         -->
 	<!--===============================-->
