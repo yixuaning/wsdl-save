@@ -1908,7 +1908,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="IPv4"/>
 			<xs:enumeration value="IPv6"/>
-			<xs:enumeration value="DNS"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!--===============================-->
@@ -1927,11 +1926,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="IPv6Address" type="tt:IPv6Address" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>IPv6 address.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DNSname" type="tt:DNSName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>DNS name.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="tt:NetworkHostExtension" minOccurs="0"/>
@@ -2014,94 +2008,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		</xs:restriction>
 	</xs:simpleType>
 	<!--===============================-->
-	<xs:simpleType name="DNSName">
-		<xs:restriction base="xs:token"/>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="HostnameInformation">
-		<xs:sequence>
-			<xs:element name="FromDHCP" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether the hostname is obtained from DHCP or not.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Name" type="xs:token" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Indicates the hostname.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:HostnameInformationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="HostnameInformationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="DNSInformation">
-		<xs:sequence>
-			<xs:element name="FromDHCP" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not DNS information is retrieved from DHCP.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="SearchDomain" type="xs:token" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Search domain.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DNSFromDHCP" type="tt:IPAddress" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of DNS addresses received from DHCP.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DNSManual" type="tt:IPAddress" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of manually entered DNS addresses.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:DNSInformationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="DNSInformationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="NTPInformation">
-		<xs:sequence>
-			<xs:element name="FromDHCP" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>Indicates if NTP information is to be retrieved by using DHCP.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="NTPFromDHCP" type="tt:NetworkHost" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of NTP addresses retrieved by using DHCP.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="NTPManual" type="tt:NetworkHost" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>List of manually entered NTP addresses.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:NTPInformationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="NTPInformationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
 	<xs:simpleType name="Domain">
 		<xs:restriction base="xs:token"/>
 	</xs:simpleType>
@@ -2110,42 +2016,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="Allow"/>
 			<xs:enumeration value="Deny"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="DynamicDNSInformation">
-		<xs:sequence>
-			<xs:element name="Type" type="tt:DynamicDNSType">
-				<xs:annotation>
-					<xs:documentation>Dynamic DNS type.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Name" type="tt:DNSName" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>DNS name.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="TTL" type="xs:duration" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Time to live.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:DynamicDNSInformationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="DynamicDNSInformationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="DynamicDNSType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="NoUpdate"/>
-			<xs:enumeration value="ClientUpdates"/>
-			<xs:enumeration value="ServerUpdates"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<!--===============================-->
@@ -2757,11 +2627,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 			<xs:element name="IPVersion6" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>Indicates whether or not IPv6 is supported.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="DynDNS" type="xs:boolean" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Indicates whether or not  is supported.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Extension" type="tt:NetworkCapabilitiesExtension" minOccurs="0"/>
