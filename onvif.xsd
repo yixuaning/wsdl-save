@@ -1280,7 +1280,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 					<xs:documentation>Extension point prepared for future 802.3 configuration.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="Dot11" type="tt:Dot11Configuration" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Extension" type="tt:NetworkInterfaceExtension2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1707,7 +1706,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Dot3" type="tt:Dot3Configuration" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Dot11" type="tt:Dot11Configuration" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="Extension" type="tt:NetworkInterfaceSetConfigurationExtension2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -1757,182 +1755,9 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 		</xs:sequence>
 	</xs:complexType>
 	<!--===============================-->
-	<xs:complexType name="Dot11Configuration">
-		<xs:sequence>
-			<xs:element name="SSID" type="tt:Dot11SSIDType"/>
-			<xs:element name="Mode" type="tt:Dot11StationMode"/>
-			<xs:element name="Alias" type="tt:Name"/>
-			<xs:element name="Priority" type="tt:NetworkInterfaceConfigPriority"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11SSIDType">
-		<xs:restriction base="xs:hexBinary">
-			<xs:minLength value="1"/>
-			<xs:maxLength value="32"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11StationMode">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="Ad-hoc"/>
-			<xs:enumeration value="Infrastructure"/>
-			<xs:enumeration value="Extended"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="Dot11SecurityConfiguration">
-		<xs:sequence>
-			<xs:element name="Mode" type="tt:Dot11SecurityMode"/>
-			<xs:element name="Algorithm" type="tt:Dot11Cipher" minOccurs="0"/>
-			<xs:element name="PSK" type="tt:Dot11PSKSet" minOccurs="0"/>
-			<xs:element name="Dot1X" type="tt:ReferenceToken" minOccurs="0"/>
-			<xs:element name="Extension" type="tt:Dot11SecurityConfigurationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Dot11SecurityConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11SecurityMode">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="None"/>
-			<xs:enumeration value="WEP"/>
-			<xs:enumeration value="PSK"/>
-			<xs:enumeration value="Dot1X"/>
-			<xs:enumeration value="Extended"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11Cipher">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="CCMP"/>
-			<xs:enumeration value="TKIP"/>
-			<xs:enumeration value="Any"/>
-			<xs:enumeration value="Extended"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11PSK">
-		<xs:restriction base="xs:hexBinary">
-			<xs:length value="32"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11PSKPassphrase">
-		<xs:restriction base="xs:string">
-			<xs:pattern value="[ -~]{8,63}"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="Dot11PSKSet">
-		<xs:sequence>
-			<xs:element name="Key" type="tt:Dot11PSK" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>
-					According to IEEE802.11-2007 H.4.1 the RSNA PSK consists of 256 bits, or 64 octets when represented in hex<br/>
-					Either Key or Passphrase shall be given, if both are supplied Key shall be used by the device and Passphrase ignored.
-				</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Passphrase" type="tt:Dot11PSKPassphrase" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>
-					According to IEEE802.11-2007 H.4.1 a pass-phrase is a sequence of between 8 and 63 ASCII-encoded characters and
-					each character in the pass-phrase must have an encoding in the range of 32 to 126 (decimal),inclusive.<br/>
-					If only Passpharse is supplied the Key shall be derived using the algorithm described in IEEE802.11-2007 section H.4
-				</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:Dot11PSKSetExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Dot11PSKSetExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
 	<xs:complexType name="NetworkInterfaceSetConfigurationExtension2">
 		<xs:sequence>
 			<xs:any namespace="##targetNamespace" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Dot11Capabilities">
-		<xs:sequence>
-			<xs:element name="TKIP" type="xs:boolean"/>
-			<xs:element name="ScanAvailableNetworks" type="xs:boolean"/>
-			<xs:element name="MultipleConfiguration" type="xs:boolean"/>
-			<xs:element name="AdHocStationMode" type="xs:boolean"/>
-			<xs:element name="WEP" type="xs:boolean"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11SignalStrength">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="None"/>
-			<xs:enumeration value="Very Bad"/>
-			<xs:enumeration value="Bad"/>
-			<xs:enumeration value="Good"/>
-			<xs:enumeration value="Very Good"/>
-			<xs:enumeration value="Extended"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="Dot11Status">
-		<xs:sequence>
-			<xs:element name="SSID" type="tt:Dot11SSIDType"/>
-			<xs:element name="BSSID" type="xs:string" minOccurs="0"/>
-			<xs:element name="PairCipher" type="tt:Dot11Cipher" minOccurs="0"/>
-			<xs:element name="GroupCipher" type="tt:Dot11Cipher" minOccurs="0"/>
-			<xs:element name="SignalStrength" type="tt:Dot11SignalStrength" minOccurs="0"/>
-			<xs:element name="ActiveConfigAlias" type="tt:ReferenceToken"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:simpleType name="Dot11AuthAndMangementSuite">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="None"/>
-			<xs:enumeration value="Dot1X"/>
-			<xs:enumeration value="PSK"/>
-			<xs:enumeration value="Extended"/>
-		</xs:restriction>
-	</xs:simpleType>
-	<!--===============================-->
-	<xs:complexType name="Dot11AvailableNetworks">
-		<xs:sequence>
-			<xs:element name="SSID" type="tt:Dot11SSIDType"/>
-			<xs:element name="BSSID" type="xs:string" minOccurs="0"/>
-			<xs:element name="AuthAndMangementSuite" type="tt:Dot11AuthAndMangementSuite" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>See IEEE802.11 7.3.2.25.2 for details.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="PairCipher" type="tt:Dot11Cipher" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="GroupCipher" type="tt:Dot11Cipher" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="SignalStrength" type="tt:Dot11SignalStrength" minOccurs="0"/>
-			<xs:element name="Extension" type="tt:Dot11AvailableNetworksExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Dot11AvailableNetworksExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:sequence>
 	</xs:complexType>
 	<!--===============================-->
@@ -2166,7 +1991,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<xs:complexType name="NetworkCapabilitiesExtension">
 		<xs:sequence>
 			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="Dot11Configuration" type="xs:boolean" minOccurs="0"/>
 			<xs:element name="Extension" type="tt:NetworkCapabilitiesExtension2" minOccurs="0"/>
 		</xs:sequence>
 	</xs:complexType>
@@ -2600,67 +2424,6 @@ decoding .A decoder shall decode every data it receives (according to its capabi
 	<!--===============================-->
 	<!--   Start Dot1X related Types   -->
 	<!--===============================-->
-	<xs:complexType name="Dot1XConfiguration">
-		<xs:sequence>
-			<xs:element name="Dot1XConfigurationToken" type="tt:ReferenceToken"/>
-			<xs:element name="Identity" type="xs:string"/>
-			<xs:element name="AnonymousID" type="xs:string" minOccurs="0"/>
-			<xs:element name="EAPMethod" type="xs:int">
-				<xs:annotation>
-					<xs:documentation>
-				EAP Method type as defined in <a href="http://www.iana.org/assignments/eap-numbers/eap-numbers.xhtml">IANA EAP Registry</a>.
-			</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="CACertificateID" type="xs:token" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="EAPMethodConfiguration" type="tt:EAPMethodConfiguration" minOccurs="0"/>
-			<xs:element name="Extension" type="tt:Dot1XConfigurationExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="Dot1XConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EAPMethodConfiguration">
-		<xs:sequence>
-			<xs:element name="TLSConfiguration" type="tt:TLSConfiguration" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Confgiuration information for TLS Method.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Password" type="xs:string" minOccurs="0">
-				<xs:annotation>
-					<xs:documentation>Password for those EAP Methods that require a password. The password shall never be returned on a get method.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-			<xs:element name="Extension" type="tt:EapMethodExtension" minOccurs="0"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="EapMethodExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="TLSConfiguration">
-		<xs:sequence>
-			<xs:element name="CertificateID" type="xs:token"/>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-		<xs:anyAttribute processContents="lax"/>
-	</xs:complexType>
-	<!--===============================-->
-	<xs:complexType name="GenericEapPwdConfigurationExtension">
-		<xs:sequence>
-			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:complexType>
 	<!--===============================-->
 	<!--End, Dot1X related Types -->
 	<!--===============================-->

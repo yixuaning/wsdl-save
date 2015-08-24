@@ -118,16 +118,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 						<xs:documentation>Indicates support for IPv6.</xs:documentation>
 					</xs:annotation>
 				</xs:attribute>
-				<xs:attribute name="Dot11Configuration" type="xs:boolean">
-					<xs:annotation>
-						<xs:documentation>Indicates support for IEEE 802.11 configuration.</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
-				<xs:attribute name="Dot1XConfigurations" type="xs:int">
-					<xs:annotation>
-						<xs:documentation>Indicates the maximum number of Dot1X configurations supported by the device</xs:documentation>
-					</xs:annotation>
-				</xs:attribute>
 				<xs:attribute name="HostnameFromDHCP" type="xs:boolean">
 					<xs:annotation>
 						<xs:documentation>Indicates support for retrieval of hostname from DHCP.</xs:documentation>
@@ -831,122 +821,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				</xs:complexType>
 			</xs:element>
 			<!--===============================-->
-			<xs:element name="CreateDot1XConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfiguration" type="tt:Dot1XConfiguration" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="CreateDot1XConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="SetDot1XConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfiguration" type="tt:Dot1XConfiguration" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="SetDot1XConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetDot1XConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfigurationToken" type="tt:ReferenceToken" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetDot1XConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfiguration" type="tt:Dot1XConfiguration" minOccurs="1" maxOccurs="1"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetDot1XConfigurations">
-				<xs:complexType>
-					<xs:sequence>
-			</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetDot1XConfigurationsResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfiguration" type="tt:Dot1XConfiguration" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="DeleteDot1XConfiguration">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Dot1XConfigurationToken" type="tt:ReferenceToken" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="DeleteDot1XConfigurationResponse">
-				<xs:complexType>
-					<xs:sequence>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetDot11Capabilities">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetDot11CapabilitiesResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Capabilities" type="tt:Dot11Capabilities"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="GetDot11Status">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="InterfaceToken" type="tt:ReferenceToken"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="GetDot11StatusResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Status" type="tt:Dot11Status"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
-			<xs:element name="ScanAvailableDot11Networks">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="InterfaceToken" type="tt:ReferenceToken"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="ScanAvailableDot11NetworksResponse">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Networks" type="tt:Dot11AvailableNetworks" minOccurs="0" maxOccurs="unbounded"/>
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-			<!--===============================-->
 			<xs:element name="GetSystemUris">
 				<xs:complexType>
 					<xs:sequence/>
@@ -1349,54 +1223,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 	<wsdl:message name="SetAccessPolicyResponse">
 		<wsdl:part name="parameters" element="tds:SetAccessPolicyResponse"/>
 	</wsdl:message>
-	<wsdl:message name="CreateDot1XConfigurationRequest">
-		<wsdl:part name="parameters" element="tds:CreateDot1XConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="CreateDot1XConfigurationResponse">
-		<wsdl:part name="parameters" element="tds:CreateDot1XConfigurationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="SetDot1XConfigurationRequest">
-		<wsdl:part name="parameters" element="tds:SetDot1XConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="SetDot1XConfigurationResponse">
-		<wsdl:part name="parameters" element="tds:SetDot1XConfigurationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot1XConfigurationRequest">
-		<wsdl:part name="parameters" element="tds:GetDot1XConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot1XConfigurationResponse">
-		<wsdl:part name="parameters" element="tds:GetDot1XConfigurationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot1XConfigurationsRequest">
-		<wsdl:part name="parameters" element="tds:GetDot1XConfigurations"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot1XConfigurationsResponse">
-		<wsdl:part name="parameters" element="tds:GetDot1XConfigurationsResponse"/>
-	</wsdl:message>
-	<wsdl:message name="DeleteDot1XConfigurationRequest">
-		<wsdl:part name="parameters" element="tds:DeleteDot1XConfiguration"/>
-	</wsdl:message>
-	<wsdl:message name="DeleteDot1XConfigurationResponse">
-		<wsdl:part name="parameters" element="tds:DeleteDot1XConfigurationResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot11CapabilitiesRequest">
-		<wsdl:part name="parameters" element="tds:GetDot11Capabilities"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot11CapabilitiesResponse">
-		<wsdl:part name="parameters" element="tds:GetDot11CapabilitiesResponse"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot11StatusRequest">
-		<wsdl:part name="parameters" element="tds:GetDot11Status"/>
-	</wsdl:message>
-	<wsdl:message name="GetDot11StatusResponse">
-		<wsdl:part name="parameters" element="tds:GetDot11StatusResponse"/>
-	</wsdl:message>
-	<wsdl:message name="ScanAvailableDot11NetworksRequest">
-		<wsdl:part name="parameters" element="tds:ScanAvailableDot11Networks"/>
-	</wsdl:message>
-	<wsdl:message name="ScanAvailableDot11NetworksResponse">
-		<wsdl:part name="parameters" element="tds:ScanAvailableDot11NetworksResponse"/>
-	</wsdl:message>
 	<wsdl:message name="GetSystemUrisRequest">
 		<wsdl:part name="parameters" element="tds:GetSystemUris"/>
 	</wsdl:message>
@@ -1710,66 +1536,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 				based on WS-Security authentication, then the device shall support this command.</wsdl:documentation>
 			<wsdl:input message="tds:SetAccessPolicyRequest"/>
 			<wsdl:output message="tds:SetAccessPolicyResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="CreateDot1XConfiguration">
-			<wsdl:documentation>This operation newly creates IEEE 802.1X configuration parameter set of the device. The
-				device shall support this command if it supports IEEE 802.1X. If the device receives this
-				request with already existing configuration token (Dot1XConfigurationToken) specification, the
-				device should respond with 'ter:ReferenceToken ' error to indicate there is some configuration
-				conflict.</wsdl:documentation>
-			<wsdl:input message="tds:CreateDot1XConfigurationRequest"/>
-			<wsdl:output message="tds:CreateDot1XConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="SetDot1XConfiguration">
-			<wsdl:documentation>While the CreateDot1XConfiguration command is trying to create a new configuration
-				parameter set, this operation modifies existing IEEE 802.1X configuration parameter set of
-				the device. A device that support IEEE 802.1X shall support this command.</wsdl:documentation>
-			<wsdl:input message="tds:SetDot1XConfigurationRequest"/>
-			<wsdl:output message="tds:SetDot1XConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot1XConfiguration">
-			<wsdl:documentation>This operation gets one IEEE 802.1X configuration parameter set from the device by
-				specifying the configuration token (Dot1XConfigurationToken).<br/>
-				A device that supports IEEE 802.1X shall support this command.
-				Regardless of whether the 802.1X method in the retrieved configuration has a password or
-				not, the device shall not include the Password element in the response.</wsdl:documentation>
-			<wsdl:input message="tds:GetDot1XConfigurationRequest"/>
-			<wsdl:output message="tds:GetDot1XConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot1XConfigurations">
-			<wsdl:documentation>This operation gets all the existing IEEE 802.1X configuration parameter sets from the device.
-				The device shall respond with all the IEEE 802.1X configurations so that the client can get to
-				know how many IEEE 802.1X configurations are existing and how they are configured.<br/>
-				A device that support IEEE 802.1X shall support this command.<br/>
-				Regardless of whether the 802.1X method in the retrieved configuration has a password or
-				not, the device shall not include the Password element in the response.</wsdl:documentation>
-			<wsdl:input message="tds:GetDot1XConfigurationsRequest"/>
-			<wsdl:output message="tds:GetDot1XConfigurationsResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="DeleteDot1XConfiguration">
-			<wsdl:documentation>This operation deletes an IEEE 802.1X configuration parameter set from the device. Which
-				configuration should be deleted is specified by the 'Dot1XConfigurationToken' in the request.
-				A device that support IEEE 802.1X shall support this command.</wsdl:documentation>
-			<wsdl:input message="tds:DeleteDot1XConfigurationRequest"/>
-			<wsdl:output message="tds:DeleteDot1XConfigurationResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot11Capabilities">
-			<wsdl:documentation>This operation returns the IEEE802.11 capabilities. The device shall support
-				this operation.</wsdl:documentation>
-			<wsdl:input message="tds:GetDot11CapabilitiesRequest"/>
-			<wsdl:output message="tds:GetDot11CapabilitiesResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot11Status">
-			<wsdl:documentation>This operation returns the status of a wireless network interface. The device shall support this
-				command.</wsdl:documentation>
-			<wsdl:input message="tds:GetDot11StatusRequest"/>
-			<wsdl:output message="tds:GetDot11StatusResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="ScanAvailableDot11Networks">
-			<wsdl:documentation>This operation returns a lists of the wireless networks in range of the device. A device should
-				support this operation.</wsdl:documentation>
-			<wsdl:input message="tds:ScanAvailableDot11NetworksRequest"/>
-			<wsdl:output message="tds:ScanAvailableDot11NetworksResponse"/>
 		</wsdl:operation>
 		<wsdl:operation name="GetSystemUris">
 			<wsdl:documentation>This operation is used to retrieve URIs from which system information may be downloaded
@@ -2136,78 +1902,6 @@ IN NO EVENT WILL THE CORPORATION OR ITS MEMBERS OR THEIR AFFILIATES BE LIABLE FO
 		</wsdl:operation>
 		<wsdl:operation name="SetAccessPolicy">
 			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetAccessPolicy"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="CreateDot1XConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/CreateDot1XConfiguration"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="SetDot1XConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/SetDot1XConfiguration"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot1XConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetDot1XConfiguration"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot1XConfigurations">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetDot1XConfigurations"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="DeleteDot1XConfiguration">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/DeleteDot1XConfiguration"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot11Capabilities">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetDot11Capabilities"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="GetDot11Status">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/GetDot11Status"/>
-			<wsdl:input>
-				<soap:body use="literal"/>
-			</wsdl:input>
-			<wsdl:output>
-				<soap:body use="literal"/>
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="ScanAvailableDot11Networks">
-			<soap:operation soapAction="http://www.onvif.org/ver10/device/wsdl/ScanAvailableDot11Networks"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
